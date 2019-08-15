@@ -110,7 +110,7 @@
             <artifactId>netty-transport-native-epoll</artifactId>
             <version>${netty.version}</version>
             <classifier>linux-x86_64</classifier>
-            <!-- 
+            <!--
             <classifier>${os.detected.name}-${os.detected.arch}</classifier>
              -->
         </dependency>
@@ -147,7 +147,7 @@
         <dependency>
             <groupId>com.mchange</groupId>
             <artifactId>c3p0</artifactId>
-            <version>[0.9.5.3,)</version>
+            <version>0.9.5.4</version>
         </dependency>
 
         <!-- needs extra dependencies: objenesis & hamcrest -->
@@ -238,12 +238,6 @@
             <artifactId>mongo-java-driver</artifactId>
             <version>3.4.1</version>
         </dependency>
-        <dependency>
-            <groupId>cn.wildfirechat</groupId>
-            <artifactId>common</artifactId>
-            <version>0.25</version>
-            <scope>compile</scope>
-        </dependency>
 
     </dependencies>
 
@@ -304,7 +298,7 @@
                 </executions>
             </plugin>
 
-          <!--  <plugin>
+            <plugin>
                 <groupId>pl.project13.maven</groupId>
                 <artifactId>git-commit-id-plugin</artifactId>
                 <version>2.1.5</version>
@@ -316,40 +310,40 @@
                     </execution>
                 </executions>
                 <configuration>
-                    &lt;!&ndash;日期格式;默认值:dd.MM.yyyy '@' HH:mm:ss z;&ndash;&gt;
+                    <!--日期格式;默认值:dd.MM.yyyy '@' HH:mm:ss z;-->
                     <dateFormat>yyyyMMddHHmmss</dateFormat>
-                    &lt;!&ndash;,构建过程中,是否打印详细信息;默认值:false;&ndash;&gt;
+                    <!--,构建过程中,是否打印详细信息;默认值:false;-->
                     <verbose>true</verbose>
-                    &lt;!&ndash; ".git"文件路径;默认值:${project.basedir}/.git; &ndash;&gt;
+                    <!-- ".git"文件路径;默认值:${project.basedir}/.git; -->
                     <dotGitDirectory>${project.basedir}/.git</dotGitDirectory>
-                    &lt;!&ndash;若项目打包类型为pom,是否取消构建;默认值:true;&ndash;&gt;
+                    <!--若项目打包类型为pom,是否取消构建;默认值:true;-->
                     <skipPoms>false</skipPoms>
-                    &lt;!&ndash;是否生成"git.properties"文件;默认值:false;&ndash;&gt;
+                    <!--是否生成"git.properties"文件;默认值:false;-->
                     <generateGitPropertiesFile>true</generateGitPropertiesFile>
-                    &lt;!&ndash;指定"git.properties"文件的存放路径(相对于${project.basedir}的一个路径);&ndash;&gt;
+                    <!--指定"git.properties"文件的存放路径(相对于${project.basedir}的一个路径);-->
                     <generateGitPropertiesFilename>config/git.properties</generateGitPropertiesFilename>
-                    &lt;!&ndash;".git"文件夹未找到时,构建是否失败;若设置true,则构建失败;若设置false,则跳过执行该目标;默认值:true;&ndash;&gt;
+                    <!--".git"文件夹未找到时,构建是否失败;若设置true,则构建失败;若设置false,则跳过执行该目标;默认值:true;-->
                     <failOnNoGitDirectory>false</failOnNoGitDirectory>
 
-                    &lt;!&ndash;git描述配置,可选;由JGit提供实现;&ndash;&gt;
+                    <!--git描述配置,可选;由JGit提供实现;-->
                     <gitDescribe>
-                        &lt;!&ndash;是否生成描述属性&ndash;&gt;
+                        <!--是否生成描述属性-->
                         <skip>false</skip>
-                        &lt;!&ndash;提交操作未发现tag时,仅打印提交操作ID,&ndash;&gt;
+                        <!--提交操作未发现tag时,仅打印提交操作ID,-->
                         <always>false</always>
-                        &lt;!&ndash;提交操作ID显式字符长度,最大值为:40;默认值:7;
+                        <!--提交操作ID显式字符长度,最大值为:40;默认值:7;
                             0代表特殊意义;后面有解释;
-                        &ndash;&gt;
+                        -->
                         <abbrev>7</abbrev>
-                        &lt;!&ndash;构建触发时,代码有修改时(即"dirty state"),添加指定后缀;默认值:"";&ndash;&gt;
+                        <!--构建触发时,代码有修改时(即"dirty state"),添加指定后缀;默认值:"";-->
                         <dirty>-dirty</dirty>
-                        &lt;!&ndash;always print using the "tag-commits_from_tag-g_commit_id-maybe_dirty" format, even if "on" a tag.
+                        <!--always print using the "tag-commits_from_tag-g_commit_id-maybe_dirty" format, even if "on" a tag.
                             The distance will always be 0 if you're "on" the tag.
-                        &ndash;&gt;
+                        -->
                         <forceLongFormat>false</forceLongFormat>
                     </gitDescribe>
                 </configuration>
-            </plugin>-->
+            </plugin>
         </plugins>
     </build>
 </project>

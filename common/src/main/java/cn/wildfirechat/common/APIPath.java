@@ -28,6 +28,7 @@ public interface APIPath {
     String Msg_Send = "/admin/message/send";
     String Msg_Recall = "/admin/message/recall";
     String Msg_Broadcast = "/admin/message/broadcast";
+    String Msg_Multicast = "/admin/message/multicast";
 
     String Create_Group = "/admin/group/create";
     String Group_Dismiss = "/admin/group/del";
@@ -37,6 +38,9 @@ public interface APIPath {
     String Group_Member_Add = "/admin/group/member/add";
     String Group_Member_Kickoff = "/admin/group/member/del";
 
+    String Create_Channel = "/admin/channel/create";
+    String Get_System_Setting = "/admin/system/get_setting";
+    String Put_System_Setting = "/admin/system/put_setting";
 
     String Channel_Message_Send = "/channel/message/send";
 

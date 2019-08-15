@@ -16,6 +16,7 @@
 
 package io.moquette.spi;
 
+import cn.wildfirechat.pojos.SystemSettingPojo;
 import cn.wildfirechat.proto.WFCMessage;
 import com.xiaoleilu.loServer.model.FriendData;
 import cn.wildfirechat.pojos.InputOutputUserBlockStatus;
@@ -90,14 +91,14 @@ public interface IMessagesStore {
         @Override
         public String toString() {
             return "PublishEvent{clientID='" + m_clientID + '\'' + ", m_retain="
-                    + m_retained + ", m_qos=" + m_qos + ", m_topic='" + m_topic + '\'' + '}';
+                + m_retained + ", m_qos=" + m_qos + ", m_topic='" + m_topic + '\'' + '}';
         }
     }
 
     DatabaseStore getDatabaseStore();
     WFCMessage.Message storeMessage(String fromUser, String fromClientId, WFCMessage.Message message);
     void storeSensitiveMessage(WFCMessage.Message message);
-	int getNotifyReceivers(String fromUser, WFCMessage.Message.Builder message, Set<String> notifyReceivers);
+    int getNotifyReceivers(String fromUser, WFCMessage.Message.Builder message, Set<String> notifyReceivers);
     Set<String> getAllEnds();
     WFCMessage.PullMessageResult fetchMessage(String user, String exceptClientId, long fromMessageId, int pullType);
     WFCMessage.PullMessageResult loadRemoteMessages(String user, WFCMessage.Conversation conversation, long beforeUid, int count);
@@ -118,7 +119,7 @@ public interface IMessagesStore {
     boolean isMemberInGroup(String member, String groupId);
     ErrorCode canSendMessageInGroup(String member, String groupId);
 
-    ErrorCode recallMessage(long messageUid, String operatorId);
+    ErrorCode recallMessage(long messageUid, String operatorId, boolean isAdmin);
 
     WFCMessage.Robot getRobot(String robotId);
     void addRobot(WFCMessage.Robot robot);
@@ -132,11 +133,13 @@ public interface IMessagesStore {
     void addUserInfo(WFCMessage.User user, String password);
     WFCMessage.User getUserInfo(String userId);
     WFCMessage.User getUserInfoByName(String name);
-    WFCMessage.User getUserInfoByNameAndPwd(String name, String pwdMd5);
     WFCMessage.User getUserInfoByMobile(String mobile);
     List<WFCMessage.User> searchUser(String keyword, boolean buzzy, int page);
+
     ErrorCode updateUserPwd(String userId, String password);
 
+    boolean updateSystemSetting(int id, String value, String desc);
+    SystemSettingPojo getSystemSetting(int id);
     void createChatroom(String chatroomId, WFCMessage.ChatroomInfo chatroomInfo);
     void destoryChatroom(String chatroomId);
     WFCMessage.ChatroomInfo getChatroomInfo(String chatroomId);
@@ -151,7 +154,8 @@ public interface IMessagesStore {
 
     ErrorCode verifyToken(String userId, String token, List<String> serverIPs, List<Integer> ports);
     ErrorCode login(String name, String password, List<String> userIdRet);
-    boolean checkPassword(String userId,String password);
+
+    boolean checkPassword(String userId, String password);
 
     List<FriendData> getFriendList(String userId, long version);
     List<WFCMessage.FriendRequest> getFriendRequestList(String userId, long version);
