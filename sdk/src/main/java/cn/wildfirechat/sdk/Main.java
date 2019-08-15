@@ -7,9 +7,12 @@ import cn.wildfirechat.sdk.model.IMResult;
 import cn.wildfirechat.sdk.utilities.AdminHttpUtils;
 import cn.wildfirechat.sdk.utilities.RobotHttpUtils;
 
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import static cn.wildfirechat.proto.ProtoConstants.SystemSettingType.Group_Max_Member_Count;
 
 public class Main {
     public static void main(String[] args) throws Exception {
@@ -25,7 +28,7 @@ public class Main {
         userInfo.setMobile("13900000000");
         userInfo.setDisplayName("user 1");
 
-        IMResult<OutputCreateUser>  resultCreateUser = UserAdmin.createUser(userInfo);
+        IMResult<OutputCreateUser> resultCreateUser = UserAdmin.createUser(userInfo);
         if (resultCreateUser != null && resultCreateUser.getErrorCode() == ErrorCode.ERROR_CODE_SUCCESS) {
             System.out.println("Create user " + resultCreateUser.getResult().getName() + " success");
         } else {
@@ -248,7 +251,7 @@ public class Main {
             System.exit(-1);
         }
 
-        voidIMResult = GroupAdmin.kickoffGroupMembers("user1", groupInfo.getTarget_id(), Arrays.asList("use2", "user3"), null, null);
+        voidIMResult = GroupAdmin.kickoffGroupMembers("user1", groupInfo.getTarget_id(), Arrays.asList("user3"), null, null);
         if (voidIMResult != null && voidIMResult.getErrorCode() == ErrorCode.ERROR_CODE_SUCCESS) {
             System.out.println("kickoff group member success");
         } else {
@@ -292,6 +295,48 @@ public class Main {
             System.exit(-1);
         }
 
+        List<String> multicastReceivers = Arrays.asList("user2", "user3", "user4");
+        IMResult<MultiMessageResult> resultMulticastMessage = MessageAdmin.multicastMessage("user1", multicastReceivers, 0, payload);
+        if (resultMulticastMessage != null && resultMulticastMessage.getErrorCode() == ErrorCode.ERROR_CODE_SUCCESS) {
+            System.out.println("multi message success, messageid is " + resultMulticastMessage.getResult().getMessageUid());
+        } else {
+            System.out.println("multi message failure");
+            System.exit(-1);
+        }
+        
+        IMResult<SystemSettingPojo> resultGetSystemSetting  =  GeneralAdmin.getSystemSetting(Group_Max_Member_Count);
+        if (resultGetSystemSetting != null && resultGetSystemSetting.getErrorCode() == ErrorCode.ERROR_CODE_SUCCESS) {
+            System.out.println("success");
+        } else {
+            System.out.println("get system setting failure");
+            System.exit(-1);
+        }
+
+        IMResult<Void> resultSetSystemSetting = GeneralAdmin.setSystemSetting(Group_Max_Member_Count, "2000", "最大群人数为2000");
+        if (resultSetSystemSetting != null && resultSetSystemSetting.getErrorCode() == ErrorCode.ERROR_CODE_SUCCESS) {
+            System.out.println("success");
+        } else {
+            System.out.println("get system setting failure");
+            System.exit(-1);
+        }
+
+        resultGetSystemSetting  =  GeneralAdmin.getSystemSetting(Group_Max_Member_Count);
+        if (resultGetSystemSetting != null && resultGetSystemSetting.getErrorCode() == ErrorCode.ERROR_CODE_SUCCESS && resultGetSystemSetting.getResult().value.equals("2000")) {
+            System.out.println("success");
+        } else {
+            System.out.println("get system setting failure");
+            System.exit(-1);
+        }
+
+        InputCreateChannel inputCreateChannel = new InputCreateChannel();
+        inputCreateChannel.setName("MyChannel");
+        IMResult<OutputCreateChannel> resultCreateChannel = GeneralAdmin.createChannel(inputCreateChannel);
+        if (resultCreateChannel != null && resultCreateChannel.getErrorCode() == ErrorCode.ERROR_CODE_SUCCESS) {
+            System.out.println("success");
+        } else {
+            System.out.println("create channel failure");
+            System.exit(-1);
+        }
 
         //初始化机器人API
         RobotHttpUtils.init("http://localhost", "robot1", "123456");

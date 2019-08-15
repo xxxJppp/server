@@ -11456,6 +11456,21 @@ public final class WFCMessage {
      */
     com.google.protobuf.ByteString
         getMentionedTargetBytes(int index);
+
+    // optional string extra = 12;
+    /**
+     * <code>optional string extra = 12;</code>
+     */
+    boolean hasExtra();
+    /**
+     * <code>optional string extra = 12;</code>
+     */
+    java.lang.String getExtra();
+    /**
+     * <code>optional string extra = 12;</code>
+     */
+    com.google.protobuf.ByteString
+        getExtraBytes();
   }
   /**
    * Protobuf type {@code MessageContent}
@@ -11564,6 +11579,11 @@ public final class WFCMessage {
                 mutable_bitField0_ |= 0x00000400;
               }
               mentionedTarget_.add(input.readBytes());
+              break;
+            }
+            case 98: {
+              bitField0_ |= 0x00000400;
+              extra_ = input.readBytes();
               break;
             }
           }
@@ -11907,6 +11927,49 @@ public final class WFCMessage {
       return mentionedTarget_.getByteString(index);
     }
 
+    // optional string extra = 12;
+    public static final int EXTRA_FIELD_NUMBER = 12;
+    private java.lang.Object extra_;
+    /**
+     * <code>optional string extra = 12;</code>
+     */
+    public boolean hasExtra() {
+      return ((bitField0_ & 0x00000400) == 0x00000400);
+    }
+    /**
+     * <code>optional string extra = 12;</code>
+     */
+    public java.lang.String getExtra() {
+      java.lang.Object ref = extra_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          extra_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>optional string extra = 12;</code>
+     */
+    public com.google.protobuf.ByteString
+        getExtraBytes() {
+      java.lang.Object ref = extra_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        extra_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
     private void initFields() {
       type_ = 0;
       searchableContent_ = "";
@@ -11919,6 +11982,7 @@ public final class WFCMessage {
       expireDuration_ = 0;
       mentionedType_ = 0;
       mentionedTarget_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      extra_ = "";
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -11968,6 +12032,9 @@ public final class WFCMessage {
       }
       for (int i = 0; i < mentionedTarget_.size(); i++) {
         output.writeBytes(11, mentionedTarget_.getByteString(i));
+      }
+      if (((bitField0_ & 0x00000400) == 0x00000400)) {
+        output.writeBytes(12, getExtraBytes());
       }
       getUnknownFields().writeTo(output);
     }
@@ -12026,6 +12093,10 @@ public final class WFCMessage {
         }
         size += dataSize;
         size += 1 * getMentionedTargetList().size();
+      }
+      if (((bitField0_ & 0x00000400) == 0x00000400)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(12, getExtraBytes());
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -12165,6 +12236,8 @@ public final class WFCMessage {
         bitField0_ = (bitField0_ & ~0x00000200);
         mentionedTarget_ = com.google.protobuf.LazyStringArrayList.EMPTY;
         bitField0_ = (bitField0_ & ~0x00000400);
+        extra_ = "";
+        bitField0_ = (bitField0_ & ~0x00000800);
         return this;
       }
 
@@ -12239,6 +12312,10 @@ public final class WFCMessage {
           bitField0_ = (bitField0_ & ~0x00000400);
         }
         result.mentionedTarget_ = mentionedTarget_;
+        if (((from_bitField0_ & 0x00000800) == 0x00000800)) {
+          to_bitField0_ |= 0x00000400;
+        }
+        result.extra_ = extra_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -12301,6 +12378,11 @@ public final class WFCMessage {
             ensureMentionedTargetIsMutable();
             mentionedTarget_.addAll(other.mentionedTarget_);
           }
+          onChanged();
+        }
+        if (other.hasExtra()) {
+          bitField0_ |= 0x00000800;
+          extra_ = other.extra_;
           onChanged();
         }
         this.mergeUnknownFields(other.getUnknownFields());
@@ -12920,6 +13002,80 @@ public final class WFCMessage {
   }
   ensureMentionedTargetIsMutable();
         mentionedTarget_.add(value);
+        onChanged();
+        return this;
+      }
+
+      // optional string extra = 12;
+      private java.lang.Object extra_ = "";
+      /**
+       * <code>optional string extra = 12;</code>
+       */
+      public boolean hasExtra() {
+        return ((bitField0_ & 0x00000800) == 0x00000800);
+      }
+      /**
+       * <code>optional string extra = 12;</code>
+       */
+      public java.lang.String getExtra() {
+        java.lang.Object ref = extra_;
+        if (!(ref instanceof java.lang.String)) {
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          extra_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string extra = 12;</code>
+       */
+      public com.google.protobuf.ByteString
+          getExtraBytes() {
+        java.lang.Object ref = extra_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          extra_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string extra = 12;</code>
+       */
+      public Builder setExtra(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000800;
+        extra_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string extra = 12;</code>
+       */
+      public Builder clearExtra() {
+        bitField0_ = (bitField0_ & ~0x00000800);
+        extra_ = getDefaultInstance().getExtra();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string extra = 12;</code>
+       */
+      public Builder setExtraBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000800;
+        extra_ = value;
         onChanged();
         return this;
       }
@@ -58078,6 +58234,967 @@ public final class WFCMessage {
     // @@protoc_insertion_point(class_scope:LoadRemoteMessages)
   }
 
+  public interface MultiCastMessageOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
+
+    // required string from_user = 1;
+    /**
+     * <code>required string from_user = 1;</code>
+     */
+    boolean hasFromUser();
+    /**
+     * <code>required string from_user = 1;</code>
+     */
+    java.lang.String getFromUser();
+    /**
+     * <code>required string from_user = 1;</code>
+     */
+    com.google.protobuf.ByteString
+        getFromUserBytes();
+
+    // required .MessageContent content = 2;
+    /**
+     * <code>required .MessageContent content = 2;</code>
+     */
+    boolean hasContent();
+    /**
+     * <code>required .MessageContent content = 2;</code>
+     */
+    cn.wildfirechat.proto.WFCMessage.MessageContent getContent();
+    /**
+     * <code>required .MessageContent content = 2;</code>
+     */
+    cn.wildfirechat.proto.WFCMessage.MessageContentOrBuilder getContentOrBuilder();
+
+    // repeated string to = 3;
+    /**
+     * <code>repeated string to = 3;</code>
+     */
+    java.util.List<java.lang.String>
+    getToList();
+    /**
+     * <code>repeated string to = 3;</code>
+     */
+    int getToCount();
+    /**
+     * <code>repeated string to = 3;</code>
+     */
+    java.lang.String getTo(int index);
+    /**
+     * <code>repeated string to = 3;</code>
+     */
+    com.google.protobuf.ByteString
+        getToBytes(int index);
+
+    // required int32 line = 4;
+    /**
+     * <code>required int32 line = 4;</code>
+     */
+    boolean hasLine();
+    /**
+     * <code>required int32 line = 4;</code>
+     */
+    int getLine();
+  }
+  /**
+   * Protobuf type {@code MultiCastMessage}
+   */
+  public static final class MultiCastMessage extends
+      com.google.protobuf.GeneratedMessage
+      implements MultiCastMessageOrBuilder {
+    // Use MultiCastMessage.newBuilder() to construct.
+    private MultiCastMessage(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+      super(builder);
+      this.unknownFields = builder.getUnknownFields();
+    }
+    private MultiCastMessage(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final MultiCastMessage defaultInstance;
+    public static MultiCastMessage getDefaultInstance() {
+      return defaultInstance;
+    }
+
+    public MultiCastMessage getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+        getUnknownFields() {
+      return this.unknownFields;
+    }
+    private MultiCastMessage(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      initFields();
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 10: {
+              bitField0_ |= 0x00000001;
+              fromUser_ = input.readBytes();
+              break;
+            }
+            case 18: {
+              cn.wildfirechat.proto.WFCMessage.MessageContent.Builder subBuilder = null;
+              if (((bitField0_ & 0x00000002) == 0x00000002)) {
+                subBuilder = content_.toBuilder();
+              }
+              content_ = input.readMessage(cn.wildfirechat.proto.WFCMessage.MessageContent.PARSER, extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(content_);
+                content_ = subBuilder.buildPartial();
+              }
+              bitField0_ |= 0x00000002;
+              break;
+            }
+            case 26: {
+              if (!((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
+                to_ = new com.google.protobuf.LazyStringArrayList();
+                mutable_bitField0_ |= 0x00000004;
+              }
+              to_.add(input.readBytes());
+              break;
+            }
+            case 32: {
+              bitField0_ |= 0x00000004;
+              line_ = input.readInt32();
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e.getMessage()).setUnfinishedMessage(this);
+      } finally {
+        if (((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
+          to_ = new com.google.protobuf.UnmodifiableLazyStringList(to_);
+        }
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return cn.wildfirechat.proto.WFCMessage.internal_static_MultiCastMessage_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return cn.wildfirechat.proto.WFCMessage.internal_static_MultiCastMessage_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              cn.wildfirechat.proto.WFCMessage.MultiCastMessage.class, cn.wildfirechat.proto.WFCMessage.MultiCastMessage.Builder.class);
+    }
+
+    public static com.google.protobuf.Parser<MultiCastMessage> PARSER =
+        new com.google.protobuf.AbstractParser<MultiCastMessage>() {
+      public MultiCastMessage parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new MultiCastMessage(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<MultiCastMessage> getParserForType() {
+      return PARSER;
+    }
+
+    private int bitField0_;
+    // required string from_user = 1;
+    public static final int FROM_USER_FIELD_NUMBER = 1;
+    private java.lang.Object fromUser_;
+    /**
+     * <code>required string from_user = 1;</code>
+     */
+    public boolean hasFromUser() {
+      return ((bitField0_ & 0x00000001) == 0x00000001);
+    }
+    /**
+     * <code>required string from_user = 1;</code>
+     */
+    public java.lang.String getFromUser() {
+      java.lang.Object ref = fromUser_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          fromUser_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>required string from_user = 1;</code>
+     */
+    public com.google.protobuf.ByteString
+        getFromUserBytes() {
+      java.lang.Object ref = fromUser_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        fromUser_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    // required .MessageContent content = 2;
+    public static final int CONTENT_FIELD_NUMBER = 2;
+    private cn.wildfirechat.proto.WFCMessage.MessageContent content_;
+    /**
+     * <code>required .MessageContent content = 2;</code>
+     */
+    public boolean hasContent() {
+      return ((bitField0_ & 0x00000002) == 0x00000002);
+    }
+    /**
+     * <code>required .MessageContent content = 2;</code>
+     */
+    public cn.wildfirechat.proto.WFCMessage.MessageContent getContent() {
+      return content_;
+    }
+    /**
+     * <code>required .MessageContent content = 2;</code>
+     */
+    public cn.wildfirechat.proto.WFCMessage.MessageContentOrBuilder getContentOrBuilder() {
+      return content_;
+    }
+
+    // repeated string to = 3;
+    public static final int TO_FIELD_NUMBER = 3;
+    private com.google.protobuf.LazyStringList to_;
+    /**
+     * <code>repeated string to = 3;</code>
+     */
+    public java.util.List<java.lang.String>
+        getToList() {
+      return to_;
+    }
+    /**
+     * <code>repeated string to = 3;</code>
+     */
+    public int getToCount() {
+      return to_.size();
+    }
+    /**
+     * <code>repeated string to = 3;</code>
+     */
+    public java.lang.String getTo(int index) {
+      return to_.get(index);
+    }
+    /**
+     * <code>repeated string to = 3;</code>
+     */
+    public com.google.protobuf.ByteString
+        getToBytes(int index) {
+      return to_.getByteString(index);
+    }
+
+    // required int32 line = 4;
+    public static final int LINE_FIELD_NUMBER = 4;
+    private int line_;
+    /**
+     * <code>required int32 line = 4;</code>
+     */
+    public boolean hasLine() {
+      return ((bitField0_ & 0x00000004) == 0x00000004);
+    }
+    /**
+     * <code>required int32 line = 4;</code>
+     */
+    public int getLine() {
+      return line_;
+    }
+
+    private void initFields() {
+      fromUser_ = "";
+      content_ = cn.wildfirechat.proto.WFCMessage.MessageContent.getDefaultInstance();
+      to_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      line_ = 0;
+    }
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized != -1) return isInitialized == 1;
+
+      if (!hasFromUser()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasContent()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasLine()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!getContent().isInitialized()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      getSerializedSize();
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeBytes(1, getFromUserBytes());
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeMessage(2, content_);
+      }
+      for (int i = 0; i < to_.size(); i++) {
+        output.writeBytes(3, to_.getByteString(i));
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        output.writeInt32(4, line_);
+      }
+      getUnknownFields().writeTo(output);
+    }
+
+    private int memoizedSerializedSize = -1;
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(1, getFromUserBytes());
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(2, content_);
+      }
+      {
+        int dataSize = 0;
+        for (int i = 0; i < to_.size(); i++) {
+          dataSize += com.google.protobuf.CodedOutputStream
+            .computeBytesSizeNoTag(to_.getByteString(i));
+        }
+        size += dataSize;
+        size += 1 * getToList().size();
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(4, line_);
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
+    }
+
+    public static cn.wildfirechat.proto.WFCMessage.MultiCastMessage parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static cn.wildfirechat.proto.WFCMessage.MultiCastMessage parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static cn.wildfirechat.proto.WFCMessage.MultiCastMessage parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static cn.wildfirechat.proto.WFCMessage.MultiCastMessage parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static cn.wildfirechat.proto.WFCMessage.MultiCastMessage parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static cn.wildfirechat.proto.WFCMessage.MultiCastMessage parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+    public static cn.wildfirechat.proto.WFCMessage.MultiCastMessage parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input);
+    }
+    public static cn.wildfirechat.proto.WFCMessage.MultiCastMessage parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
+    }
+    public static cn.wildfirechat.proto.WFCMessage.MultiCastMessage parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static cn.wildfirechat.proto.WFCMessage.MultiCastMessage parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder(cn.wildfirechat.proto.WFCMessage.MultiCastMessage prototype) {
+      return newBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code MultiCastMessage}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements cn.wildfirechat.proto.WFCMessage.MultiCastMessageOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return cn.wildfirechat.proto.WFCMessage.internal_static_MultiCastMessage_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return cn.wildfirechat.proto.WFCMessage.internal_static_MultiCastMessage_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                cn.wildfirechat.proto.WFCMessage.MultiCastMessage.class, cn.wildfirechat.proto.WFCMessage.MultiCastMessage.Builder.class);
+      }
+
+      // Construct using cn.wildfirechat.proto.WFCMessage.MultiCastMessage.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+          getContentFieldBuilder();
+        }
+      }
+      private static Builder create() {
+        return new Builder();
+      }
+
+      public Builder clear() {
+        super.clear();
+        fromUser_ = "";
+        bitField0_ = (bitField0_ & ~0x00000001);
+        if (contentBuilder_ == null) {
+          content_ = cn.wildfirechat.proto.WFCMessage.MessageContent.getDefaultInstance();
+        } else {
+          contentBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000002);
+        to_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000004);
+        line_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000008);
+        return this;
+      }
+
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return cn.wildfirechat.proto.WFCMessage.internal_static_MultiCastMessage_descriptor;
+      }
+
+      public cn.wildfirechat.proto.WFCMessage.MultiCastMessage getDefaultInstanceForType() {
+        return cn.wildfirechat.proto.WFCMessage.MultiCastMessage.getDefaultInstance();
+      }
+
+      public cn.wildfirechat.proto.WFCMessage.MultiCastMessage build() {
+        cn.wildfirechat.proto.WFCMessage.MultiCastMessage result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public cn.wildfirechat.proto.WFCMessage.MultiCastMessage buildPartial() {
+        cn.wildfirechat.proto.WFCMessage.MultiCastMessage result = new cn.wildfirechat.proto.WFCMessage.MultiCastMessage(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+          to_bitField0_ |= 0x00000001;
+        }
+        result.fromUser_ = fromUser_;
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+          to_bitField0_ |= 0x00000002;
+        }
+        if (contentBuilder_ == null) {
+          result.content_ = content_;
+        } else {
+          result.content_ = contentBuilder_.build();
+        }
+        if (((bitField0_ & 0x00000004) == 0x00000004)) {
+          to_ = new com.google.protobuf.UnmodifiableLazyStringList(
+              to_);
+          bitField0_ = (bitField0_ & ~0x00000004);
+        }
+        result.to_ = to_;
+        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
+          to_bitField0_ |= 0x00000004;
+        }
+        result.line_ = line_;
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof cn.wildfirechat.proto.WFCMessage.MultiCastMessage) {
+          return mergeFrom((cn.wildfirechat.proto.WFCMessage.MultiCastMessage)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(cn.wildfirechat.proto.WFCMessage.MultiCastMessage other) {
+        if (other == cn.wildfirechat.proto.WFCMessage.MultiCastMessage.getDefaultInstance()) return this;
+        if (other.hasFromUser()) {
+          bitField0_ |= 0x00000001;
+          fromUser_ = other.fromUser_;
+          onChanged();
+        }
+        if (other.hasContent()) {
+          mergeContent(other.getContent());
+        }
+        if (!other.to_.isEmpty()) {
+          if (to_.isEmpty()) {
+            to_ = other.to_;
+            bitField0_ = (bitField0_ & ~0x00000004);
+          } else {
+            ensureToIsMutable();
+            to_.addAll(other.to_);
+          }
+          onChanged();
+        }
+        if (other.hasLine()) {
+          setLine(other.getLine());
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        if (!hasFromUser()) {
+          
+          return false;
+        }
+        if (!hasContent()) {
+          
+          return false;
+        }
+        if (!hasLine()) {
+          
+          return false;
+        }
+        if (!getContent().isInitialized()) {
+          
+          return false;
+        }
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        cn.wildfirechat.proto.WFCMessage.MultiCastMessage parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (cn.wildfirechat.proto.WFCMessage.MultiCastMessage) e.getUnfinishedMessage();
+          throw e;
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      // required string from_user = 1;
+      private java.lang.Object fromUser_ = "";
+      /**
+       * <code>required string from_user = 1;</code>
+       */
+      public boolean hasFromUser() {
+        return ((bitField0_ & 0x00000001) == 0x00000001);
+      }
+      /**
+       * <code>required string from_user = 1;</code>
+       */
+      public java.lang.String getFromUser() {
+        java.lang.Object ref = fromUser_;
+        if (!(ref instanceof java.lang.String)) {
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          fromUser_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>required string from_user = 1;</code>
+       */
+      public com.google.protobuf.ByteString
+          getFromUserBytes() {
+        java.lang.Object ref = fromUser_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          fromUser_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>required string from_user = 1;</code>
+       */
+      public Builder setFromUser(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000001;
+        fromUser_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required string from_user = 1;</code>
+       */
+      public Builder clearFromUser() {
+        bitField0_ = (bitField0_ & ~0x00000001);
+        fromUser_ = getDefaultInstance().getFromUser();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required string from_user = 1;</code>
+       */
+      public Builder setFromUserBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000001;
+        fromUser_ = value;
+        onChanged();
+        return this;
+      }
+
+      // required .MessageContent content = 2;
+      private cn.wildfirechat.proto.WFCMessage.MessageContent content_ = cn.wildfirechat.proto.WFCMessage.MessageContent.getDefaultInstance();
+      private com.google.protobuf.SingleFieldBuilder<
+          cn.wildfirechat.proto.WFCMessage.MessageContent, cn.wildfirechat.proto.WFCMessage.MessageContent.Builder, cn.wildfirechat.proto.WFCMessage.MessageContentOrBuilder> contentBuilder_;
+      /**
+       * <code>required .MessageContent content = 2;</code>
+       */
+      public boolean hasContent() {
+        return ((bitField0_ & 0x00000002) == 0x00000002);
+      }
+      /**
+       * <code>required .MessageContent content = 2;</code>
+       */
+      public cn.wildfirechat.proto.WFCMessage.MessageContent getContent() {
+        if (contentBuilder_ == null) {
+          return content_;
+        } else {
+          return contentBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>required .MessageContent content = 2;</code>
+       */
+      public Builder setContent(cn.wildfirechat.proto.WFCMessage.MessageContent value) {
+        if (contentBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          content_ = value;
+          onChanged();
+        } else {
+          contentBuilder_.setMessage(value);
+        }
+        bitField0_ |= 0x00000002;
+        return this;
+      }
+      /**
+       * <code>required .MessageContent content = 2;</code>
+       */
+      public Builder setContent(
+          cn.wildfirechat.proto.WFCMessage.MessageContent.Builder builderForValue) {
+        if (contentBuilder_ == null) {
+          content_ = builderForValue.build();
+          onChanged();
+        } else {
+          contentBuilder_.setMessage(builderForValue.build());
+        }
+        bitField0_ |= 0x00000002;
+        return this;
+      }
+      /**
+       * <code>required .MessageContent content = 2;</code>
+       */
+      public Builder mergeContent(cn.wildfirechat.proto.WFCMessage.MessageContent value) {
+        if (contentBuilder_ == null) {
+          if (((bitField0_ & 0x00000002) == 0x00000002) &&
+              content_ != cn.wildfirechat.proto.WFCMessage.MessageContent.getDefaultInstance()) {
+            content_ =
+              cn.wildfirechat.proto.WFCMessage.MessageContent.newBuilder(content_).mergeFrom(value).buildPartial();
+          } else {
+            content_ = value;
+          }
+          onChanged();
+        } else {
+          contentBuilder_.mergeFrom(value);
+        }
+        bitField0_ |= 0x00000002;
+        return this;
+      }
+      /**
+       * <code>required .MessageContent content = 2;</code>
+       */
+      public Builder clearContent() {
+        if (contentBuilder_ == null) {
+          content_ = cn.wildfirechat.proto.WFCMessage.MessageContent.getDefaultInstance();
+          onChanged();
+        } else {
+          contentBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000002);
+        return this;
+      }
+      /**
+       * <code>required .MessageContent content = 2;</code>
+       */
+      public cn.wildfirechat.proto.WFCMessage.MessageContent.Builder getContentBuilder() {
+        bitField0_ |= 0x00000002;
+        onChanged();
+        return getContentFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>required .MessageContent content = 2;</code>
+       */
+      public cn.wildfirechat.proto.WFCMessage.MessageContentOrBuilder getContentOrBuilder() {
+        if (contentBuilder_ != null) {
+          return contentBuilder_.getMessageOrBuilder();
+        } else {
+          return content_;
+        }
+      }
+      /**
+       * <code>required .MessageContent content = 2;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilder<
+          cn.wildfirechat.proto.WFCMessage.MessageContent, cn.wildfirechat.proto.WFCMessage.MessageContent.Builder, cn.wildfirechat.proto.WFCMessage.MessageContentOrBuilder> 
+          getContentFieldBuilder() {
+        if (contentBuilder_ == null) {
+          contentBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+              cn.wildfirechat.proto.WFCMessage.MessageContent, cn.wildfirechat.proto.WFCMessage.MessageContent.Builder, cn.wildfirechat.proto.WFCMessage.MessageContentOrBuilder>(
+                  content_,
+                  getParentForChildren(),
+                  isClean());
+          content_ = null;
+        }
+        return contentBuilder_;
+      }
+
+      // repeated string to = 3;
+      private com.google.protobuf.LazyStringList to_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      private void ensureToIsMutable() {
+        if (!((bitField0_ & 0x00000004) == 0x00000004)) {
+          to_ = new com.google.protobuf.LazyStringArrayList(to_);
+          bitField0_ |= 0x00000004;
+         }
+      }
+      /**
+       * <code>repeated string to = 3;</code>
+       */
+      public java.util.List<java.lang.String>
+          getToList() {
+        return java.util.Collections.unmodifiableList(to_);
+      }
+      /**
+       * <code>repeated string to = 3;</code>
+       */
+      public int getToCount() {
+        return to_.size();
+      }
+      /**
+       * <code>repeated string to = 3;</code>
+       */
+      public java.lang.String getTo(int index) {
+        return to_.get(index);
+      }
+      /**
+       * <code>repeated string to = 3;</code>
+       */
+      public com.google.protobuf.ByteString
+          getToBytes(int index) {
+        return to_.getByteString(index);
+      }
+      /**
+       * <code>repeated string to = 3;</code>
+       */
+      public Builder setTo(
+          int index, java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureToIsMutable();
+        to_.set(index, value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string to = 3;</code>
+       */
+      public Builder addTo(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureToIsMutable();
+        to_.add(value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string to = 3;</code>
+       */
+      public Builder addAllTo(
+          java.lang.Iterable<java.lang.String> values) {
+        ensureToIsMutable();
+        super.addAll(values, to_);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string to = 3;</code>
+       */
+      public Builder clearTo() {
+        to_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000004);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string to = 3;</code>
+       */
+      public Builder addToBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureToIsMutable();
+        to_.add(value);
+        onChanged();
+        return this;
+      }
+
+      // required int32 line = 4;
+      private int line_ ;
+      /**
+       * <code>required int32 line = 4;</code>
+       */
+      public boolean hasLine() {
+        return ((bitField0_ & 0x00000008) == 0x00000008);
+      }
+      /**
+       * <code>required int32 line = 4;</code>
+       */
+      public int getLine() {
+        return line_;
+      }
+      /**
+       * <code>required int32 line = 4;</code>
+       */
+      public Builder setLine(int value) {
+        bitField0_ |= 0x00000008;
+        line_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required int32 line = 4;</code>
+       */
+      public Builder clearLine() {
+        bitField0_ = (bitField0_ & ~0x00000008);
+        line_ = 0;
+        onChanged();
+        return this;
+      }
+
+      // @@protoc_insertion_point(builder_scope:MultiCastMessage)
+    }
+
+    static {
+      defaultInstance = new MultiCastMessage(true);
+      defaultInstance.initFields();
+    }
+
+    // @@protoc_insertion_point(class_scope:MultiCastMessage)
+  }
+
   private static com.google.protobuf.Descriptors.Descriptor
     internal_static_AddFriendRequest_descriptor;
   private static
@@ -58428,6 +59545,11 @@ public final class WFCMessage {
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_LoadRemoteMessages_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_MultiCastMessage_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_MultiCastMessage_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -58467,127 +59589,130 @@ public final class WFCMessage {
       "\rListenChannel\022\022\n\nchannel_id\030\001 \002(\t\022\016\n\006li" +
       "sten\030\002 \002(\005\"E\n\023SearchChannelResult\022\035\n\007cha" +
       "nnel\030\001 \003(\0132\014.ChannelInfo\022\017\n\007keyword\030\002 \002(",
-      "\t\"\373\001\n\016MessageContent\022\014\n\004type\030\001 \002(\005\022\032\n\022se" +
+      "\t\"\212\002\n\016MessageContent\022\014\n\004type\030\001 \002(\005\022\032\n\022se" +
       "archable_content\030\002 \001(\t\022\024\n\014push_content\030\003" +
       " \001(\t\022\017\n\007content\030\004 \001(\t\022\014\n\004data\030\005 \001(\014\022\021\n\tm" +
       "ediaType\030\006 \001(\005\022\026\n\016remoteMediaUrl\030\007 \001(\t\022\024" +
       "\n\014persist_flag\030\010 \001(\005\022\027\n\017expire_duration\030" +
       "\t \001(\005\022\026\n\016mentioned_type\030\n \001(\005\022\030\n\020mention" +
-      "ed_target\030\013 \003(\t\"\207\001\n\025AddGroupMemberReques" +
-      "t\022\020\n\010group_id\030\001 \002(\t\022\"\n\014added_member\030\002 \003(" +
-      "\0132\014.GroupMember\022\017\n\007to_line\030\003 \003(\005\022\'\n\016noti" +
-      "fy_content\030\004 \001(\0132\017.MessageContent\"e\n\022Cre",
-      "ateGroupRequest\022\025\n\005group\030\001 \002(\0132\006.Group\022\017" +
-      "\n\007to_line\030\002 \003(\005\022\'\n\016notify_content\030\003 \001(\0132" +
-      "\017.MessageContent\"a\n\023DismissGroupRequest\022" +
-      "\020\n\010group_id\030\001 \002(\t\022\017\n\007to_line\030\002 \003(\005\022\'\n\016no" +
-      "tify_content\030\003 \001(\0132\017.MessageContent\"\226\001\n\r" +
-      "FriendRequest\022\020\n\010from_uid\030\001 \001(\t\022\016\n\006to_ui" +
-      "d\030\002 \002(\t\022\016\n\006reason\030\003 \002(\t\022\016\n\006status\030\004 \001(\005\022" +
-      "\021\n\tupdate_dt\030\005 \001(\003\022\030\n\020from_read_status\030\006" +
-      " \001(\010\022\026\n\016to_read_status\030\007 \001(\010\"#\n\rGeneralR" +
-      "esult\022\022\n\nerror_code\030\001 \002(\005\"S\n\024GetUploadTo",
-      "kenResult\022\016\n\006domain\030\001 \002(\t\022\r\n\005token\030\002 \002(\t" +
-      "\022\016\n\006server\030\003 \002(\t\022\014\n\004port\030\004 \001(\005\"9\n\023Handle" +
-      "FriendRequest\022\022\n\ntarget_uid\030\001 \002(\t\022\016\n\006sta" +
-      "tus\030\002 \002(\005\"\023\n\005IDBuf\022\n\n\002id\030\001 \002(\t\"\027\n\tIDList" +
-      "Buf\022\n\n\002id\030\001 \003(\t\"\256\001\n\007Message\022#\n\014conversat" +
-      "ion\030\001 \002(\0132\r.Conversation\022\021\n\tfrom_user\030\002 " +
-      "\002(\t\022 \n\007content\030\003 \002(\0132\017.MessageContent\022\022\n" +
-      "\nmessage_id\030\004 \001(\003\022\030\n\020server_timestamp\030\005 " +
-      "\001(\003\022\017\n\007to_user\030\006 \001(\t\022\n\n\002to\030\007 \003(\t\"\332\001\n\004Use" +
-      "r\022\013\n\003uid\030\001 \002(\t\022\014\n\004name\030\002 \001(\t\022\024\n\014display_",
-      "name\030\003 \001(\t\022\020\n\010portrait\030\004 \001(\t\022\016\n\006mobile\030\005" +
-      " \001(\t\022\r\n\005email\030\006 \001(\t\022\017\n\007address\030\007 \001(\t\022\017\n\007" +
-      "company\030\010 \001(\t\022\r\n\005extra\030\t \001(\t\022\021\n\tupdate_d" +
-      "t\030\n \001(\003\022\016\n\006gender\030\013 \001(\005\022\016\n\006social\030\014 \001(\t\022" +
-      "\014\n\004type\030\r \001(\005\"c\n\005Robot\022\013\n\003uid\030\001 \002(\t\022\r\n\005s" +
-      "tate\030\002 \002(\005\022\r\n\005owner\030\003 \001(\t\022\016\n\006secret\030\004 \001(" +
-      "\t\022\020\n\010callback\030\005 \001(\t\022\r\n\005extra\030\006 \001(\t\"(\n\017Ge" +
-      "tRobotsResult\022\025\n\005entry\030\001 \003(\0132\006.Robot\"P\n\005" +
-      "Thing\022\013\n\003uid\030\001 \002(\t\022\r\n\005state\030\002 \002(\005\022\r\n\005tok" +
-      "en\030\003 \002(\t\022\r\n\005owner\030\004 \001(\t\022\r\n\005extra\030\005 \001(\t\"(",
-      "\n\017GetThingsResult\022\025\n\005entry\030\001 \003(\0132\006.Thing" +
-      "\"g\n\030UploadDeviceTokenRequest\022\020\n\010platform" +
-      "\030\001 \002(\005\022\020\n\010app_name\030\002 \002(\t\022\024\n\014device_token" +
-      "\030\003 \002(\t\022\021\n\tpush_type\030\004 \002(\005\"\201\001\n\026ModifyGrou" +
-      "pInfoRequest\022\020\n\010group_id\030\001 \002(\t\022\014\n\004type\030\002" +
-      " \002(\005\022\r\n\005value\030\003 \002(\t\022\017\n\007to_line\030\004 \003(\005\022\'\n\016" +
-      "notify_content\030\005 \001(\0132\017.MessageContent\"\203\001" +
-      "\n\026SetGroupManagerRequest\022\020\n\010group_id\030\001 \002" +
-      "(\t\022\014\n\004type\030\002 \002(\005\022\017\n\007user_id\030\003 \003(\t\022\017\n\007to_" +
-      "line\030\004 \003(\005\022\'\n\016notify_content\030\005 \001(\0132\017.Mes",
-      "sageContent\"(\n\tInfoEntry\022\014\n\004type\030\001 \002(\005\022\r" +
-      "\n\005value\030\002 \002(\t\"0\n\023ModifyMyInfoRequest\022\031\n\005" +
-      "entry\030\001 \003(\0132\n.InfoEntry\";\n\rNotifyMessage" +
-      "\022\014\n\004type\030\001 \002(\005\022\014\n\004head\030\002 \002(\003\022\016\n\006target\030\003" +
-      " \001(\t\"=\n\022PullMessageRequest\022\n\n\002id\030\001 \002(\003\022\014" +
-      "\n\004type\030\002 \002(\005\022\r\n\005delay\030\003 \001(\003\"M\n\021PullMessa" +
-      "geResult\022\031\n\007message\030\001 \003(\0132\010.Message\022\017\n\007c" +
-      "urrent\030\002 \002(\003\022\014\n\004head\030\003 \002(\003\"/\n\023PullGroupI" +
-      "nfoResult\022\030\n\004info\030\001 \003(\0132\n.GroupInfo\"6\n\026P" +
-      "ullGroupMemberRequest\022\016\n\006target\030\001 \002(\t\022\014\n",
-      "\004head\030\002 \002(\003\"5\n\025PullGroupMemberResult\022\034\n\006" +
-      "member\030\001 \003(\0132\014.GroupMember\"-\n\013UserReques" +
-      "t\022\013\n\003uid\030\001 \002(\t\022\021\n\tupdate_dt\030\002 \001(\003\"0\n\017Pul" +
-      "lUserRequest\022\035\n\007request\030\001 \003(\0132\014.UserRequ" +
-      "est\"/\n\nUserResult\022\023\n\004user\030\001 \002(\0132\005.User\022\014" +
-      "\n\004code\030\002 \002(\005\"-\n\016PullUserResult\022\033\n\006result" +
-      "\030\001 \003(\0132\013.UserResult\"^\n\020QuitGroupRequest\022" +
-      "\020\n\010group_id\030\001 \002(\t\022\017\n\007to_line\030\002 \003(\005\022\'\n\016no" +
-      "tify_content\030\003 \001(\0132\017.MessageContent\"~\n\030R" +
-      "emoveGroupMemberRequest\022\020\n\010group_id\030\001 \002(",
-      "\t\022\026\n\016removed_member\030\002 \003(\t\022\017\n\007to_line\030\003 \003" +
-      "(\005\022\'\n\016notify_content\030\004 \001(\0132\017.MessageCont" +
-      "ent\"u\n\024TransferGroupRequest\022\020\n\010group_id\030" +
-      "\001 \002(\t\022\021\n\tnew_owner\030\002 \002(\t\022\017\n\007to_line\030\003 \003(" +
-      "\005\022\'\n\016notify_content\030\004 \001(\0132\017.MessageConte" +
-      "nt\"s\n\026ModifyGroupMemberAlias\022\020\n\010group_id" +
-      "\030\001 \002(\t\022\r\n\005alias\030\002 \002(\t\022\017\n\007to_line\030\003 \003(\005\022\'" +
-      "\n\016notify_content\030\004 \001(\0132\017.MessageContent\"" +
-      "P\n\020UserSettingEntry\022\r\n\005scope\030\001 \002(\005\022\013\n\003ke" +
-      "y\030\002 \002(\t\022\r\n\005value\030\003 \002(\t\022\021\n\tupdate_dt\030\004 \002(",
-      "\003\"A\n\024ModifyUserSettingReq\022\r\n\005scope\030\001 \002(\005" +
-      "\022\013\n\003key\030\002 \002(\t\022\r\n\005value\030\003 \002(\t\"\032\n\007Version\022" +
-      "\017\n\007version\030\001 \002(\003\"8\n\024GetUserSettingResult" +
-      "\022 \n\005entry\030\001 \003(\0132\021.UserSettingEntry\"F\n\006Fr" +
-      "iend\022\013\n\003uid\030\001 \002(\t\022\r\n\005state\030\002 \002(\005\022\021\n\tupda" +
-      "te_dt\030\003 \002(\003\022\r\n\005alias\030\004 \001(\t\"*\n\020GetFriends" +
-      "Result\022\026\n\005entry\030\001 \003(\0132\007.Friend\"7\n\026GetFri" +
-      "endRequestResult\022\035\n\005entry\030\001 \003(\0132\016.Friend" +
-      "Request\"\243\001\n\021ConnectAckPayload\022\020\n\010msg_hea" +
-      "d\030\001 \001(\003\022\023\n\013friend_head\030\002 \001(\003\022\026\n\016friend_r",
-      "q_head\030\003 \001(\003\022\024\n\014setting_head\030\004 \001(\003\022\021\n\tno" +
-      "de_addr\030\005 \001(\t\022\021\n\tnode_port\030\006 \001(\005\022\023\n\013serv" +
-      "er_time\030\007 \001(\003\"P\n\rIMHttpWrapper\022\r\n\005token\030" +
-      "\001 \002(\t\022\021\n\tclient_id\030\002 \002(\t\022\017\n\007request\030\003 \002(" +
-      "\t\022\014\n\004data\030\004 \001(\014\"A\n\021SearchUserRequest\022\017\n\007" +
-      "keyword\030\001 \002(\t\022\r\n\005fuzzy\030\002 \001(\005\022\014\n\004page\030\003 \001" +
-      "(\005\"(\n\020SearchUserResult\022\024\n\005entry\030\001 \003(\0132\005." +
-      "User\"@\n\026GetChatroomInfoRequest\022\023\n\013chatro" +
-      "om_id\030\001 \002(\t\022\021\n\tupdate_dt\030\002 \001(\003\"\227\001\n\014Chatr" +
-      "oomInfo\022\r\n\005title\030\001 \002(\t\022\014\n\004desc\030\002 \001(\t\022\020\n\010",
-      "portrait\030\003 \001(\t\022\024\n\014member_count\030\004 \001(\005\022\021\n\t" +
-      "create_dt\030\005 \001(\003\022\021\n\tupdate_dt\030\006 \001(\003\022\r\n\005ex" +
-      "tra\030\007 \001(\t\022\r\n\005state\030\010 \001(\005\"F\n\034GetChatroomM" +
-      "emberInfoRequest\022\023\n\013chatroom_id\030\001 \002(\t\022\021\n" +
-      "\tmax_count\030\002 \001(\005\";\n\022ChatroomMemberInfo\022\024" +
-      "\n\014member_count\030\001 \001(\005\022\017\n\007members\030\002 \003(\t\"\026\n" +
-      "\010INT64Buf\022\n\n\002id\030\001 \002(\003\"4\n\023NotifyRecallMes" +
-      "sage\022\n\n\002id\030\001 \002(\003\022\021\n\tfrom_user\030\002 \002(\t\"/\n\020B" +
-      "lackUserRequest\022\013\n\003uid\030\001 \002(\t\022\016\n\006status\030\002" +
-      " \002(\005\"\323\001\n\014RouteRequest\022\013\n\003app\030\001 \001(\t\022\020\n\010pl",
-      "atform\030\002 \001(\005\022\021\n\tpush_type\030\003 \001(\005\022\023\n\013devic" +
-      "e_name\030\004 \001(\t\022\026\n\016device_version\030\005 \001(\t\022\022\n\n" +
-      "phone_name\030\006 \001(\t\022\020\n\010language\030\007 \001(\t\022\024\n\014ca" +
-      "rrier_name\030\010 \001(\t\022\023\n\013app_version\030\t \001(\t\022\023\n" +
-      "\013sdk_version\030\n \001(\t\"D\n\rRouteResponse\022\014\n\004h" +
-      "ost\030\001 \002(\t\022\021\n\tlong_port\030\002 \002(\005\022\022\n\nshort_po" +
-      "rt\030\003 \002(\005\"5\n\017GetTokenRequest\022\017\n\007user_id\030\001" +
-      " \002(\t\022\021\n\tclient_id\030\002 \002(\t\"\\\n\022LoadRemoteMes" +
-      "sages\022#\n\014conversation\030\001 \002(\0132\r.Conversati" +
-      "on\022\022\n\nbefore_uid\030\002 \002(\003\022\r\n\005count\030\003 \002(\005B#\n",
-      "\025cn.wildfirechat.protoB\nWFCMessage"
+      "ed_target\030\013 \003(\t\022\r\n\005extra\030\014 \001(\t\"\207\001\n\025AddGr" +
+      "oupMemberRequest\022\020\n\010group_id\030\001 \002(\t\022\"\n\014ad" +
+      "ded_member\030\002 \003(\0132\014.GroupMember\022\017\n\007to_lin" +
+      "e\030\003 \003(\005\022\'\n\016notify_content\030\004 \001(\0132\017.Messag",
+      "eContent\"e\n\022CreateGroupRequest\022\025\n\005group\030" +
+      "\001 \002(\0132\006.Group\022\017\n\007to_line\030\002 \003(\005\022\'\n\016notify" +
+      "_content\030\003 \001(\0132\017.MessageContent\"a\n\023Dismi" +
+      "ssGroupRequest\022\020\n\010group_id\030\001 \002(\t\022\017\n\007to_l" +
+      "ine\030\002 \003(\005\022\'\n\016notify_content\030\003 \001(\0132\017.Mess" +
+      "ageContent\"\226\001\n\rFriendRequest\022\020\n\010from_uid" +
+      "\030\001 \001(\t\022\016\n\006to_uid\030\002 \002(\t\022\016\n\006reason\030\003 \002(\t\022\016" +
+      "\n\006status\030\004 \001(\005\022\021\n\tupdate_dt\030\005 \001(\003\022\030\n\020fro" +
+      "m_read_status\030\006 \001(\010\022\026\n\016to_read_status\030\007 " +
+      "\001(\010\"#\n\rGeneralResult\022\022\n\nerror_code\030\001 \002(\005",
+      "\"S\n\024GetUploadTokenResult\022\016\n\006domain\030\001 \002(\t" +
+      "\022\r\n\005token\030\002 \002(\t\022\016\n\006server\030\003 \002(\t\022\014\n\004port\030" +
+      "\004 \001(\005\"9\n\023HandleFriendRequest\022\022\n\ntarget_u" +
+      "id\030\001 \002(\t\022\016\n\006status\030\002 \002(\005\"\023\n\005IDBuf\022\n\n\002id\030" +
+      "\001 \002(\t\"\027\n\tIDListBuf\022\n\n\002id\030\001 \003(\t\"\256\001\n\007Messa" +
+      "ge\022#\n\014conversation\030\001 \002(\0132\r.Conversation\022" +
+      "\021\n\tfrom_user\030\002 \002(\t\022 \n\007content\030\003 \002(\0132\017.Me" +
+      "ssageContent\022\022\n\nmessage_id\030\004 \001(\003\022\030\n\020serv" +
+      "er_timestamp\030\005 \001(\003\022\017\n\007to_user\030\006 \001(\t\022\n\n\002t" +
+      "o\030\007 \003(\t\"\332\001\n\004User\022\013\n\003uid\030\001 \002(\t\022\014\n\004name\030\002 ",
+      "\001(\t\022\024\n\014display_name\030\003 \001(\t\022\020\n\010portrait\030\004 " +
+      "\001(\t\022\016\n\006mobile\030\005 \001(\t\022\r\n\005email\030\006 \001(\t\022\017\n\007ad" +
+      "dress\030\007 \001(\t\022\017\n\007company\030\010 \001(\t\022\r\n\005extra\030\t " +
+      "\001(\t\022\021\n\tupdate_dt\030\n \001(\003\022\016\n\006gender\030\013 \001(\005\022\016" +
+      "\n\006social\030\014 \001(\t\022\014\n\004type\030\r \001(\005\"c\n\005Robot\022\013\n" +
+      "\003uid\030\001 \002(\t\022\r\n\005state\030\002 \002(\005\022\r\n\005owner\030\003 \001(\t" +
+      "\022\016\n\006secret\030\004 \001(\t\022\020\n\010callback\030\005 \001(\t\022\r\n\005ex" +
+      "tra\030\006 \001(\t\"(\n\017GetRobotsResult\022\025\n\005entry\030\001 " +
+      "\003(\0132\006.Robot\"P\n\005Thing\022\013\n\003uid\030\001 \002(\t\022\r\n\005sta" +
+      "te\030\002 \002(\005\022\r\n\005token\030\003 \002(\t\022\r\n\005owner\030\004 \001(\t\022\r",
+      "\n\005extra\030\005 \001(\t\"(\n\017GetThingsResult\022\025\n\005entr" +
+      "y\030\001 \003(\0132\006.Thing\"g\n\030UploadDeviceTokenRequ" +
+      "est\022\020\n\010platform\030\001 \002(\005\022\020\n\010app_name\030\002 \002(\t\022" +
+      "\024\n\014device_token\030\003 \002(\t\022\021\n\tpush_type\030\004 \002(\005" +
+      "\"\201\001\n\026ModifyGroupInfoRequest\022\020\n\010group_id\030" +
+      "\001 \002(\t\022\014\n\004type\030\002 \002(\005\022\r\n\005value\030\003 \002(\t\022\017\n\007to" +
+      "_line\030\004 \003(\005\022\'\n\016notify_content\030\005 \001(\0132\017.Me" +
+      "ssageContent\"\203\001\n\026SetGroupManagerRequest\022" +
+      "\020\n\010group_id\030\001 \002(\t\022\014\n\004type\030\002 \002(\005\022\017\n\007user_" +
+      "id\030\003 \003(\t\022\017\n\007to_line\030\004 \003(\005\022\'\n\016notify_cont",
+      "ent\030\005 \001(\0132\017.MessageContent\"(\n\tInfoEntry\022" +
+      "\014\n\004type\030\001 \002(\005\022\r\n\005value\030\002 \002(\t\"0\n\023ModifyMy" +
+      "InfoRequest\022\031\n\005entry\030\001 \003(\0132\n.InfoEntry\";" +
+      "\n\rNotifyMessage\022\014\n\004type\030\001 \002(\005\022\014\n\004head\030\002 " +
+      "\002(\003\022\016\n\006target\030\003 \001(\t\"=\n\022PullMessageReques" +
+      "t\022\n\n\002id\030\001 \002(\003\022\014\n\004type\030\002 \002(\005\022\r\n\005delay\030\003 \001" +
+      "(\003\"M\n\021PullMessageResult\022\031\n\007message\030\001 \003(\013" +
+      "2\010.Message\022\017\n\007current\030\002 \002(\003\022\014\n\004head\030\003 \002(" +
+      "\003\"/\n\023PullGroupInfoResult\022\030\n\004info\030\001 \003(\0132\n" +
+      ".GroupInfo\"6\n\026PullGroupMemberRequest\022\016\n\006",
+      "target\030\001 \002(\t\022\014\n\004head\030\002 \002(\003\"5\n\025PullGroupM" +
+      "emberResult\022\034\n\006member\030\001 \003(\0132\014.GroupMembe" +
+      "r\"-\n\013UserRequest\022\013\n\003uid\030\001 \002(\t\022\021\n\tupdate_" +
+      "dt\030\002 \001(\003\"0\n\017PullUserRequest\022\035\n\007request\030\001" +
+      " \003(\0132\014.UserRequest\"/\n\nUserResult\022\023\n\004user" +
+      "\030\001 \002(\0132\005.User\022\014\n\004code\030\002 \002(\005\"-\n\016PullUserR" +
+      "esult\022\033\n\006result\030\001 \003(\0132\013.UserResult\"^\n\020Qu" +
+      "itGroupRequest\022\020\n\010group_id\030\001 \002(\t\022\017\n\007to_l" +
+      "ine\030\002 \003(\005\022\'\n\016notify_content\030\003 \001(\0132\017.Mess" +
+      "ageContent\"~\n\030RemoveGroupMemberRequest\022\020",
+      "\n\010group_id\030\001 \002(\t\022\026\n\016removed_member\030\002 \003(\t" +
+      "\022\017\n\007to_line\030\003 \003(\005\022\'\n\016notify_content\030\004 \001(" +
+      "\0132\017.MessageContent\"u\n\024TransferGroupReque" +
+      "st\022\020\n\010group_id\030\001 \002(\t\022\021\n\tnew_owner\030\002 \002(\t\022" +
+      "\017\n\007to_line\030\003 \003(\005\022\'\n\016notify_content\030\004 \001(\013" +
+      "2\017.MessageContent\"s\n\026ModifyGroupMemberAl" +
+      "ias\022\020\n\010group_id\030\001 \002(\t\022\r\n\005alias\030\002 \002(\t\022\017\n\007" +
+      "to_line\030\003 \003(\005\022\'\n\016notify_content\030\004 \001(\0132\017." +
+      "MessageContent\"P\n\020UserSettingEntry\022\r\n\005sc" +
+      "ope\030\001 \002(\005\022\013\n\003key\030\002 \002(\t\022\r\n\005value\030\003 \002(\t\022\021\n",
+      "\tupdate_dt\030\004 \002(\003\"A\n\024ModifyUserSettingReq" +
+      "\022\r\n\005scope\030\001 \002(\005\022\013\n\003key\030\002 \002(\t\022\r\n\005value\030\003 " +
+      "\002(\t\"\032\n\007Version\022\017\n\007version\030\001 \002(\003\"8\n\024GetUs" +
+      "erSettingResult\022 \n\005entry\030\001 \003(\0132\021.UserSet" +
+      "tingEntry\"F\n\006Friend\022\013\n\003uid\030\001 \002(\t\022\r\n\005stat" +
+      "e\030\002 \002(\005\022\021\n\tupdate_dt\030\003 \002(\003\022\r\n\005alias\030\004 \001(" +
+      "\t\"*\n\020GetFriendsResult\022\026\n\005entry\030\001 \003(\0132\007.F" +
+      "riend\"7\n\026GetFriendRequestResult\022\035\n\005entry" +
+      "\030\001 \003(\0132\016.FriendRequest\"\243\001\n\021ConnectAckPay" +
+      "load\022\020\n\010msg_head\030\001 \001(\003\022\023\n\013friend_head\030\002 ",
+      "\001(\003\022\026\n\016friend_rq_head\030\003 \001(\003\022\024\n\014setting_h" +
+      "ead\030\004 \001(\003\022\021\n\tnode_addr\030\005 \001(\t\022\021\n\tnode_por" +
+      "t\030\006 \001(\005\022\023\n\013server_time\030\007 \001(\003\"P\n\rIMHttpWr" +
+      "apper\022\r\n\005token\030\001 \002(\t\022\021\n\tclient_id\030\002 \002(\t\022" +
+      "\017\n\007request\030\003 \002(\t\022\014\n\004data\030\004 \001(\014\"A\n\021Search" +
+      "UserRequest\022\017\n\007keyword\030\001 \002(\t\022\r\n\005fuzzy\030\002 " +
+      "\001(\005\022\014\n\004page\030\003 \001(\005\"(\n\020SearchUserResult\022\024\n" +
+      "\005entry\030\001 \003(\0132\005.User\"@\n\026GetChatroomInfoRe" +
+      "quest\022\023\n\013chatroom_id\030\001 \002(\t\022\021\n\tupdate_dt\030" +
+      "\002 \001(\003\"\227\001\n\014ChatroomInfo\022\r\n\005title\030\001 \002(\t\022\014\n",
+      "\004desc\030\002 \001(\t\022\020\n\010portrait\030\003 \001(\t\022\024\n\014member_" +
+      "count\030\004 \001(\005\022\021\n\tcreate_dt\030\005 \001(\003\022\021\n\tupdate" +
+      "_dt\030\006 \001(\003\022\r\n\005extra\030\007 \001(\t\022\r\n\005state\030\010 \001(\005\"" +
+      "F\n\034GetChatroomMemberInfoRequest\022\023\n\013chatr" +
+      "oom_id\030\001 \002(\t\022\021\n\tmax_count\030\002 \001(\005\";\n\022Chatr" +
+      "oomMemberInfo\022\024\n\014member_count\030\001 \001(\005\022\017\n\007m" +
+      "embers\030\002 \003(\t\"\026\n\010INT64Buf\022\n\n\002id\030\001 \002(\003\"4\n\023" +
+      "NotifyRecallMessage\022\n\n\002id\030\001 \002(\003\022\021\n\tfrom_" +
+      "user\030\002 \002(\t\"/\n\020BlackUserRequest\022\013\n\003uid\030\001 " +
+      "\002(\t\022\016\n\006status\030\002 \002(\005\"\323\001\n\014RouteRequest\022\013\n\003",
+      "app\030\001 \001(\t\022\020\n\010platform\030\002 \001(\005\022\021\n\tpush_type" +
+      "\030\003 \001(\005\022\023\n\013device_name\030\004 \001(\t\022\026\n\016device_ve" +
+      "rsion\030\005 \001(\t\022\022\n\nphone_name\030\006 \001(\t\022\020\n\010langu" +
+      "age\030\007 \001(\t\022\024\n\014carrier_name\030\010 \001(\t\022\023\n\013app_v" +
+      "ersion\030\t \001(\t\022\023\n\013sdk_version\030\n \001(\t\"D\n\rRou" +
+      "teResponse\022\014\n\004host\030\001 \002(\t\022\021\n\tlong_port\030\002 " +
+      "\002(\005\022\022\n\nshort_port\030\003 \002(\005\"5\n\017GetTokenReque" +
+      "st\022\017\n\007user_id\030\001 \002(\t\022\021\n\tclient_id\030\002 \002(\t\"\\" +
+      "\n\022LoadRemoteMessages\022#\n\014conversation\030\001 \002" +
+      "(\0132\r.Conversation\022\022\n\nbefore_uid\030\002 \002(\003\022\r\n",
+      "\005count\030\003 \002(\005\"a\n\020MultiCastMessage\022\021\n\tfrom" +
+      "_user\030\001 \002(\t\022 \n\007content\030\002 \002(\0132\017.MessageCo" +
+      "ntent\022\n\n\002to\030\003 \003(\t\022\014\n\004line\030\004 \002(\005B#\n\025cn.wi" +
+      "ldfirechat.protoB\nWFCMessage"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -58677,7 +59802,7 @@ public final class WFCMessage {
           internal_static_MessageContent_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_MessageContent_descriptor,
-              new java.lang.String[] { "Type", "SearchableContent", "PushContent", "Content", "Data", "MediaType", "RemoteMediaUrl", "PersistFlag", "ExpireDuration", "MentionedType", "MentionedTarget", });
+              new java.lang.String[] { "Type", "SearchableContent", "PushContent", "Content", "Data", "MediaType", "RemoteMediaUrl", "PersistFlag", "ExpireDuration", "MentionedType", "MentionedTarget", "Extra", });
           internal_static_AddGroupMemberRequest_descriptor =
             getDescriptor().getMessageTypes().get(14);
           internal_static_AddGroupMemberRequest_fieldAccessorTable = new
@@ -59014,6 +60139,12 @@ public final class WFCMessage {
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_LoadRemoteMessages_descriptor,
               new java.lang.String[] { "Conversation", "BeforeUid", "Count", });
+          internal_static_MultiCastMessage_descriptor =
+            getDescriptor().getMessageTypes().get(70);
+          internal_static_MultiCastMessage_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_MultiCastMessage_descriptor,
+              new java.lang.String[] { "FromUser", "Content", "To", "Line", });
           return null;
         }
       };

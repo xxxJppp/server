@@ -16,6 +16,7 @@
 
 package io.moquette.spi;
 
+import cn.wildfirechat.pojos.SystemSettingPojo;
 import cn.wildfirechat.proto.WFCMessage;
 import com.xiaoleilu.loServer.model.FriendData;
 import cn.wildfirechat.pojos.InputOutputUserBlockStatus;
@@ -118,7 +119,7 @@ public interface IMessagesStore {
     boolean isMemberInGroup(String member, String groupId);
     ErrorCode canSendMessageInGroup(String member, String groupId);
 
-    ErrorCode recallMessage(long messageUid, String operatorId);
+    ErrorCode recallMessage(long messageUid, String operatorId, boolean isAdmin);
 
     WFCMessage.Robot getRobot(String robotId);
     void addRobot(WFCMessage.Robot robot);
@@ -135,6 +136,8 @@ public interface IMessagesStore {
     WFCMessage.User getUserInfoByMobile(String mobile);
     List<WFCMessage.User> searchUser(String keyword, boolean buzzy, int page);
 
+    boolean updateSystemSetting(int id, String value, String desc);
+    SystemSettingPojo getSystemSetting(int id);
     void createChatroom(String chatroomId, WFCMessage.ChatroomInfo chatroomInfo);
     void destoryChatroom(String chatroomId);
     WFCMessage.ChatroomInfo getChatroomInfo(String chatroomId);

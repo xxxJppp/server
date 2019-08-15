@@ -32,6 +32,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -233,6 +235,14 @@ abstract public class IMHandler<T> {
     public void afterAction(String clientID, String fromUser, String topic, Qos1PublishHandler.IMCallback callback) {
 
     }
+    protected long publish(String username, String clientID, WFCMessage.Message message) {
+        Set<String> notifyReceivers = new LinkedHashSet<>();
+
+        WFCMessage.Message.Builder messageBuilder = message.toBuilder();
+        int pullType = m_messagesStore.getNotifyReceivers(username, messageBuilder, notifyReceivers);
+        this.publisher.publish2Receivers(messageBuilder.build(), notifyReceivers, clientID, pullType);
+        return notifyReceivers.size();
+    }
 
     protected long saveAndPublish(String username, String clientID, WFCMessage.Message message) {
         Set<String> notifyReceivers = new LinkedHashSet<>();
@@ -246,6 +256,14 @@ abstract public class IMHandler<T> {
 
     protected long saveAndBroadcast(String username, String clientID, WFCMessage.Message message) {
         Set<String> notifyReceivers = m_messagesStore.getAllEnds();
+        WFCMessage.Message updatedMessage = m_messagesStore.storeMessage(username, clientID, message);
+        mServer.getImBusinessScheduler().execute(() -> publisher.publish2Receivers(updatedMessage, notifyReceivers, clientID, ProtoConstants.PullType.Pull_Normal));
+        return notifyReceivers.size();
+    }
+
+    protected long saveAndMulticast(String username, String clientID, WFCMessage.Message message, Collection<String> targets) {
+        Set<String> notifyReceivers = new HashSet<>();
+        notifyReceivers.addAll(targets);
         WFCMessage.Message updatedMessage = m_messagesStore.storeMessage(username, clientID, message);
         mServer.getImBusinessScheduler().execute(() -> publisher.publish2Receivers(updatedMessage, notifyReceivers, clientID, ProtoConstants.PullType.Pull_Normal));
         return notifyReceivers.size();
