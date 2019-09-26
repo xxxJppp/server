@@ -65,7 +65,7 @@ public class PushServer {
                     e.printStackTrace();
                     Utility.printExecption(LOG, e);
                 }
-            });
+        });
     }
 
     private void pushMessageInternel(PushMessage pushMessage, String deviceId, String pushContent) {

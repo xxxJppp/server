@@ -8,10 +8,11 @@
 
 package cn.wildfirechat.server;
 
-import java.io.IOException;
+import io.tio.TioClientStarter;
 
 public class Server {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         io.moquette.server.Server.start(args);
+        TioClientStarter.start(args);
     }
 }

@@ -402,8 +402,7 @@ public class MemorySessionStore implements ISessionsStore {
 		}
         sessionSet = userSessions.get(username);
         ArrayList<Session> out = new ArrayList<>();
-        for (String clientId : sessionSet
-             ) {
+        for (String clientId : sessionSet) {
             Session session = sessions.get(clientId);
             if (session != null && session.getUsername().equals(username)) {
                 out.add(session);

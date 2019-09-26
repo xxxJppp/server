@@ -193,6 +193,7 @@ public class MessagesPublisher {
             if (pullType == ProtoConstants.PullType.Pull_ChatRoom) {
                 targetClients = m_messagesStore.getChatroomMemberClient(user);
             }
+
             for (Session targetSession : sessions) {
                 //超过7天不活跃的用户忽略
                 if(System.currentTimeMillis() - targetSession.getLastActiveTime() > 7 * 24 * 60 * 60 * 1000) {
@@ -321,7 +322,6 @@ public class MessagesPublisher {
                     }
                     this.messageSender.sendPush(sender, conversationType, target, line, messageHead, targetSession.getClientID(), pushContent, messageContentType, serverTime, senderName, targetName, targetSession.getUnReceivedMsgs(), curMentionType, isHiddenDetail, targetSession.getLanguage());
                 }
-
             }
         }
     }

@@ -8,16 +8,22 @@
 
 package io.moquette.imhandler;
 
+import cn.wildfirechat.pojos.SendMessageData;
 import cn.wildfirechat.proto.ProtoConstants;
 import cn.wildfirechat.proto.WFCMessage;
+import com.google.gson.Gson;
 import com.hazelcast.util.StringUtil;
 import io.moquette.BrokerConstants;
 import io.moquette.spi.impl.Qos1PublishHandler;
 import io.netty.buffer.ByteBuf;
 import cn.wildfirechat.common.ErrorCode;
+import io.tio.TioClientStarter;
+import io.tio.TioPacket;
+import org.tio.core.Tio;
 import win.liyufan.im.IMTopic;
 import win.liyufan.im.MessageShardingUtil;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Set;
 
 import static cn.wildfirechat.proto.ProtoConstants.ContentType.Text;
@@ -85,6 +91,15 @@ public class SendMessageHandler extends IMHandler<WFCMessage.Message> {
             if (mForwardUrl != null) {
                 publisher.forwardMessage(message, mForwardUrl);
             }
+
+            //发送tio消息
+            TioPacket packet = new TioPacket();
+            try {
+                packet.setBody(new Gson().toJson(SendMessageData.fromProtoMessage(message), SendMessageData.class).getBytes(TioPacket.CHARSET));
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+            Tio.send(TioClientStarter.clientChannelContext,packet);
 
             boolean ignoreMsg = false;
             if (!isAdmin && message.getContent().getType() == Text) {
