@@ -15,7 +15,7 @@ import io.moquette.spi.impl.Qos1PublishHandler;
 import io.netty.buffer.ByteBuf;
 import cn.wildfirechat.common.ErrorCode;
 
-import static win.liyufan.im.IMTopic.DismissGroupTopic;
+import static cn.wildfirechat.common.IMTopic.DismissGroupTopic;
 
 @Handler(value = DismissGroupTopic)
 public class DismissGroupHandler extends GroupHandler<WFCMessage.DismissGroupRequest> {

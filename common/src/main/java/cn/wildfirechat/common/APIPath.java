@@ -21,7 +21,7 @@ public interface APIPath {
     String User_Check_Block_Status = "/admin/user/check_block_status";
     String User_Get_Online_Status = "/admin/user/onlinestatus";
 
-
+    String Friend_Request_Add = "/admin/friend/add_request";
     String Friend_Update_Status = "/admin/friend/status";
     String Friend_Get_List = "/admin/friend/list";
 

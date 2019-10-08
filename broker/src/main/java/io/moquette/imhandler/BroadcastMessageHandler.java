@@ -11,16 +11,10 @@ package io.moquette.imhandler;
 import cn.wildfirechat.common.ErrorCode;
 import cn.wildfirechat.proto.ProtoConstants;
 import cn.wildfirechat.proto.WFCMessage;
-import com.hazelcast.util.StringUtil;
-import io.moquette.BrokerConstants;
 import io.moquette.spi.impl.Qos1PublishHandler;
 import io.netty.buffer.ByteBuf;
-import win.liyufan.im.IMTopic;
+import cn.wildfirechat.common.IMTopic;
 import win.liyufan.im.MessageShardingUtil;
-
-import java.util.Set;
-
-import static cn.wildfirechat.proto.ProtoConstants.ContentType.Text;
 
 @Handler(value = IMTopic.BroadcastMessageTopic)
 public class BroadcastMessageHandler extends IMHandler<WFCMessage.Message> {

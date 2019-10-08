@@ -11,8 +11,8 @@ package com.xiaoleilu.loServer.action.admin;
 
 import cn.wildfirechat.common.APIPath;
 import cn.wildfirechat.common.ErrorCode;
-import cn.wildfirechat.pojos.MultiMessageResult;
-import cn.wildfirechat.pojos.MulticastMessageData;
+import cn.wildfirechat.pojos.InputAndFriendRequest;
+import cn.wildfirechat.proto.WFCMessage;
 import com.google.gson.Gson;
 import com.xiaoleilu.loServer.RestResult;
 import com.xiaoleilu.loServer.annotation.HttpMethod;
@@ -25,13 +25,14 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.HttpResponseStatus;
+import io.netty.util.internal.StringUtil;
 import cn.wildfirechat.common.IMTopic;
 
 import java.util.concurrent.Executor;
 
-@Route(APIPath.Msg_Multicast)
+@Route(APIPath.Friend_Request_Add)
 @HttpMethod("POST")
-public class MulticastMessageAction extends AdminAction {
+public class AddFriendRequestAction extends AdminAction {
 
     @Override
     public boolean isTransactionAction() {
@@ -41,18 +42,20 @@ public class MulticastMessageAction extends AdminAction {
     @Override
     public boolean action(Request request, Response response) {
         if (request.getNettyRequest() instanceof FullHttpRequest) {
-            MulticastMessageData sendMessageData = getRequestBody(request.getNettyRequest(), MulticastMessageData.class);
-            if (MulticastMessageData.isValide(sendMessageData)) {
-                RPCCenter.getInstance().sendRequest(sendMessageData.getSender(), null, IMTopic.MultiCastMessageTopic, sendMessageData.toProtoMessage().toByteArray(), sendMessageData.getSender(), TargetEntry.Type.TARGET_TYPE_USER, new RPCCenter.Callback() {
+            InputAndFriendRequest inputAndFriendRequest = getRequestBody(request.getNettyRequest(), InputAndFriendRequest.class);
+            if (inputAndFriendRequest != null
+                && !StringUtil.isNullOrEmpty(inputAndFriendRequest.getUserId())
+                && !StringUtil.isNullOrEmpty(inputAndFriendRequest.getFriendUid())){
+                WFCMessage.AddFriendRequest friendRequest = WFCMessage.AddFriendRequest.newBuilder().setTargetUid(inputAndFriendRequest.getFriendUid())
+                    .setReason(inputAndFriendRequest.getReason()).build();
+                RPCCenter.getInstance().sendRequest(inputAndFriendRequest.getUserId(), null, IMTopic.AddFriendRequestTopic, friendRequest.toByteArray(), inputAndFriendRequest.getFriendUid(), TargetEntry.Type.TARGET_TYPE_USER, new RPCCenter.Callback() {
                     @Override
                     public void onSuccess(byte[] result) {
                         ByteBuf byteBuf = Unpooled.buffer();
                         byteBuf.writeBytes(result);
                         ErrorCode errorCode = ErrorCode.fromCode(byteBuf.readByte());
                         if (errorCode == ErrorCode.ERROR_CODE_SUCCESS) {
-                            long messageId = byteBuf.readLong();
-                            long timestamp = byteBuf.readLong();
-                            sendResponse(response, null, new MultiMessageResult(messageId, timestamp));
+                            sendResponse(response, null, null);
                         } else {
                             sendResponse(response, errorCode, null);
                         }

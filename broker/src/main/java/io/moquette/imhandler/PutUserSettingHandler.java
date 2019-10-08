@@ -12,7 +12,7 @@ import cn.wildfirechat.proto.WFCMessage;
 import io.moquette.spi.impl.Qos1PublishHandler;
 import io.netty.buffer.ByteBuf;
 import cn.wildfirechat.common.ErrorCode;
-import win.liyufan.im.IMTopic;
+import cn.wildfirechat.common.IMTopic;
 
 @Handler(IMTopic.PutUserSettingTopic)
 public class PutUserSettingHandler extends IMHandler<WFCMessage.ModifyUserSettingReq> {

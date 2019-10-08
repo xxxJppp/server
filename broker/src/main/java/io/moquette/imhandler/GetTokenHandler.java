@@ -14,7 +14,7 @@ import io.moquette.spi.impl.Qos1PublishHandler;
 import io.moquette.spi.impl.security.TokenAuthenticator;
 import io.netty.buffer.ByteBuf;
 import cn.wildfirechat.common.ErrorCode;
-import win.liyufan.im.IMTopic;
+import cn.wildfirechat.common.IMTopic;
 
 @Handler(IMTopic.GetTokenTopic)
 public class GetTokenHandler extends IMHandler<WFCMessage.GetTokenRequest> {

@@ -32,7 +32,7 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.handler.codec.mqtt.*;
 import win.liyufan.im.HttpUtils;
-import win.liyufan.im.IMTopic;
+import cn.wildfirechat.common.IMTopic;
 
 
 import org.slf4j.Logger;

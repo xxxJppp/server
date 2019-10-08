@@ -23,4 +23,12 @@ public class FriendAdmin {
         return AdminHttpUtils.httpJsonPost(path, input, Void.class);
     }
 
+    public static IMResult<Void> addFriendRequest(String userId, String targetId, String reason) throws Exception {
+        String path = APIPath.Friend_Request_Add;
+        InputAndFriendRequest input = new InputAndFriendRequest();
+        input.setUserId(userId);
+        input.setFriendUid(targetId);
+        input.setReason(reason);
+        return AdminHttpUtils.httpJsonPost(path, input, Void.class);
+    }
 }

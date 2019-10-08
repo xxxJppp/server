@@ -14,7 +14,7 @@ import io.moquette.persistence.MemorySessionStore;
 import io.moquette.spi.impl.Qos1PublishHandler;
 import io.netty.buffer.ByteBuf;
 import cn.wildfirechat.common.ErrorCode;
-import win.liyufan.im.IMTopic;
+import cn.wildfirechat.common.IMTopic;
 
 
 @Handler(IMTopic.UploadDeviceTokenTopic)

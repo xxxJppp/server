@@ -6,7 +6,7 @@
  * file that was distributed with this source code.
  */
 
-package win.liyufan.im;
+package cn.wildfirechat.common;
 
 public interface IMTopic {
 	String SendMessageTopic = "MS";
@@ -29,6 +29,7 @@ public interface IMTopic {
 	String ModifyGroupInfoTopic = "GMI";
     String ModifyGroupAliasTopic = "GMA";
     String GetGroupInfoTopic = "GPGI";
+    //拉取群组成员
     String GetGroupMemberTopic = "GPGM";
     String TransferGroupTopic = "GTG";
     String SetGroupManagerTopic = "GSM";
@@ -38,13 +39,19 @@ public interface IMTopic {
 
 	String GetQiniuUploadTokenTopic = "GQNUT";
 
+	//添加好友请求
     String AddFriendRequestTopic = "FAR";
+    //处理好友请求 同意或者拒绝
     String HandleFriendRequestTopic = "FHR";
+    //ack确认好友请求
     String FriendRequestPullTopic = "FRP";
+    //添加好友通知
     String NotifyFriendRequestTopic = "FRN";
+    //好友请求未读记录
     String RriendRequestUnreadSyncTopic = "FRUS";
 
     String DeleteFriendTopic = "FDL";
+    //拉取好友列表
     String FriendPullTopic = "FP";
     String NotifyFriendTopic = "FN";
     String BlackListUserTopic = "BLU";

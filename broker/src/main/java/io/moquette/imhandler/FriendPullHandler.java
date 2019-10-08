@@ -14,7 +14,7 @@ import com.xiaoleilu.loServer.model.FriendData;
 import io.moquette.spi.impl.Qos1PublishHandler;
 import io.netty.buffer.ByteBuf;
 import cn.wildfirechat.common.ErrorCode;
-import win.liyufan.im.IMTopic;
+import cn.wildfirechat.common.IMTopic;
 
 import java.util.List;
 

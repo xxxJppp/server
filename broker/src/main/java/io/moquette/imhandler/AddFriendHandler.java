@@ -13,10 +13,10 @@ import cn.wildfirechat.proto.WFCMessage;
 import io.moquette.spi.impl.Qos1PublishHandler;
 import io.netty.buffer.ByteBuf;
 import cn.wildfirechat.common.ErrorCode;
-import win.liyufan.im.IMTopic;
+import cn.wildfirechat.common.IMTopic;
 
 import static cn.wildfirechat.common.ErrorCode.ERROR_CODE_SUCCESS;
-import static win.liyufan.im.IMTopic.HandleFriendRequestTopic;
+import static cn.wildfirechat.common.IMTopic.HandleFriendRequestTopic;
 
 @Handler(IMTopic.AddFriendRequestTopic)
 public class AddFriendHandler extends GroupHandler<WFCMessage.AddFriendRequest> {

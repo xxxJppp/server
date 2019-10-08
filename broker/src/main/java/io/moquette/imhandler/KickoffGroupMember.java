@@ -14,7 +14,7 @@ import cn.wildfirechat.pojos.GroupNotificationBinaryContent;
 import io.moquette.spi.impl.Qos1PublishHandler;
 import io.netty.buffer.ByteBuf;
 import cn.wildfirechat.common.ErrorCode;
-import static win.liyufan.im.IMTopic.KickoffGroupMemberTopic;
+import static cn.wildfirechat.common.IMTopic.KickoffGroupMemberTopic;
 
 @Handler(value = KickoffGroupMemberTopic)
 public class KickoffGroupMember extends GroupHandler<WFCMessage.RemoveGroupMemberRequest> {

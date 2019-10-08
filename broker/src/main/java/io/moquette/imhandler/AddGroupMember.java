@@ -13,10 +13,13 @@ import cn.wildfirechat.pojos.GroupNotificationBinaryContent;
 import io.moquette.spi.impl.Qos1PublishHandler;
 import io.netty.buffer.ByteBuf;
 import cn.wildfirechat.common.ErrorCode;
-import win.liyufan.im.IMTopic;
+import cn.wildfirechat.common.IMTopic;
 
 import static cn.wildfirechat.common.ErrorCode.ERROR_CODE_SUCCESS;
 
+/**
+ * 添加群成员
+ */
 @Handler(value = IMTopic.AddGroupMemberTopic)
 public class AddGroupMember extends GroupHandler<WFCMessage.AddGroupMemberRequest> {
 
@@ -31,7 +34,6 @@ public class AddGroupMember extends GroupHandler<WFCMessage.AddGroupMemberReques
                 sendGroupNotification(fromUser, request.getGroupId(), request.getToLineList(), content);
             }
         }
-
         return errorCode;
     }
 }

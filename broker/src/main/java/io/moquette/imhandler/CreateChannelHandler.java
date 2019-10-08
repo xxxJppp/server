@@ -13,9 +13,9 @@ import com.hazelcast.util.StringUtil;
 import io.moquette.spi.impl.Qos1PublishHandler;
 import io.netty.buffer.ByteBuf;
 import cn.wildfirechat.common.ErrorCode;
-import win.liyufan.im.IMTopic;
+import cn.wildfirechat.common.IMTopic;
 
-import static win.liyufan.im.IMTopic.PutUserSettingTopic;
+import static cn.wildfirechat.common.IMTopic.PutUserSettingTopic;
 import static win.liyufan.im.UserSettingScope.kUserSettingMyChannels;
 
 @Handler(value = IMTopic.CreateChannelTopic)

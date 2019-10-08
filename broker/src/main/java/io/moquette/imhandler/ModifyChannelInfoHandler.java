@@ -13,7 +13,7 @@ import io.moquette.spi.impl.Qos1PublishHandler;
 import io.netty.buffer.ByteBuf;
 import cn.wildfirechat.common.ErrorCode;
 
-import static win.liyufan.im.IMTopic.ModifyChannelInfoTopic;
+import static cn.wildfirechat.common.IMTopic.ModifyChannelInfoTopic;
 
 @Handler(value = ModifyChannelInfoTopic)
 public class ModifyChannelInfoHandler extends GroupHandler<WFCMessage.ModifyChannelInfo> {

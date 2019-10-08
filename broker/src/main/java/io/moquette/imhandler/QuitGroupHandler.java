@@ -14,7 +14,7 @@ import io.moquette.spi.impl.Qos1PublishHandler;
 import io.netty.buffer.ByteBuf;
 import cn.wildfirechat.common.ErrorCode;
 
-import static win.liyufan.im.IMTopic.QuitGroupTopic;
+import static cn.wildfirechat.common.IMTopic.QuitGroupTopic;
 
 @Handler(value = QuitGroupTopic)
 public class QuitGroupHandler extends GroupHandler<WFCMessage.QuitGroupRequest> {

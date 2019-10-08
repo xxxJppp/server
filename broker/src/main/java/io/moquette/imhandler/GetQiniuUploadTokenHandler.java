@@ -15,7 +15,7 @@ import io.moquette.server.config.MediaServerConfig;
 import io.moquette.spi.impl.Qos1PublishHandler;
 import io.netty.buffer.ByteBuf;
 import cn.wildfirechat.common.ErrorCode;
-import win.liyufan.im.IMTopic;
+import cn.wildfirechat.common.IMTopic;
 
 @Handler(IMTopic.GetQiniuUploadTokenTopic)
 public class GetQiniuUploadTokenHandler extends IMHandler<Byte> {

@@ -60,7 +60,7 @@ import io.netty.handler.codec.mqtt.MqttFixedHeader;
 import io.netty.handler.codec.mqtt.MqttMessageType;
 import io.netty.handler.codec.mqtt.MqttPublishMessage;
 import cn.wildfirechat.common.ErrorCode;
-import win.liyufan.im.IMTopic;
+import cn.wildfirechat.common.IMTopic;
 import win.liyufan.im.RateLimiter;
 import win.liyufan.im.Utility;
 import win.liyufan.im.extended.mqttmessage.ModifiedMqttPubAckMessage;

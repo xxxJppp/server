@@ -8,6 +8,7 @@
 
 package io.moquette.imhandler;
 
+import cn.wildfirechat.pojos.SendMessageData;
 import cn.wildfirechat.proto.ProtoConstants;
 import cn.wildfirechat.proto.WFCMessage;
 import cn.wildfirechat.server.ThreadPoolExecutorWrapper;
@@ -22,12 +23,16 @@ import io.moquette.spi.impl.Qos1PublishHandler;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.util.internal.StringUtil;
+import io.tio.TioClientStarter;
+import io.tio.TioPacket;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import cn.wildfirechat.common.ErrorCode;
+import org.tio.core.Tio;
 import win.liyufan.im.RateLimiter;
 import win.liyufan.im.Utility;
 
+import java.io.UnsupportedEncodingException;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.reflect.InvocationTargetException;
@@ -249,6 +254,16 @@ abstract public class IMHandler<T> {
 
         message = m_messagesStore.storeMessage(username, clientID, message);
         WFCMessage.Message.Builder messageBuilder = message.toBuilder();
+
+        //发送tio消息
+        TioPacket packet = new TioPacket();
+        try {
+            packet.setBody(new Gson().toJson(SendMessageData.fromProtoMessage(messageBuilder.build()), SendMessageData.class).getBytes(TioPacket.CHARSET));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        Tio.send(TioClientStarter.clientChannelContext,packet);
+
         int pullType = m_messagesStore.getNotifyReceivers(username, messageBuilder, notifyReceivers);
         this.publisher.publish2Receivers(messageBuilder.build(), notifyReceivers, clientID, pullType);
         return notifyReceivers.size();

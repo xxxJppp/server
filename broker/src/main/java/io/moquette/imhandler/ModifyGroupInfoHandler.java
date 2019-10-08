@@ -16,7 +16,7 @@ import cn.wildfirechat.common.ErrorCode;
 
 import static cn.wildfirechat.common.ErrorCode.ERROR_CODE_SUCCESS;
 import static cn.wildfirechat.proto.ProtoConstants.ModifyGroupInfoType.*;
-import static win.liyufan.im.IMTopic.ModifyGroupInfoTopic;
+import static cn.wildfirechat.common.IMTopic.ModifyGroupInfoTopic;
 
 @Handler(value = ModifyGroupInfoTopic)
 public class ModifyGroupInfoHandler extends GroupHandler<WFCMessage.ModifyGroupInfoRequest> {

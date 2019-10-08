@@ -13,8 +13,6 @@ import cn.wildfirechat.common.APIPath;
 import cn.wildfirechat.common.ErrorCode;
 import cn.wildfirechat.pojos.BroadMessageData;
 import cn.wildfirechat.pojos.BroadMessageResult;
-import cn.wildfirechat.pojos.SendMessageData;
-import cn.wildfirechat.pojos.SendMessageResult;
 import com.google.gson.Gson;
 import com.hazelcast.util.StringUtil;
 import com.xiaoleilu.loServer.RestResult;
@@ -28,7 +26,7 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.HttpResponseStatus;
-import win.liyufan.im.IMTopic;
+import cn.wildfirechat.common.IMTopic;
 
 import java.util.concurrent.Executor;
 

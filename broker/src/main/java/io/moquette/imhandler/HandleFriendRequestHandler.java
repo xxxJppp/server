@@ -13,7 +13,7 @@ import cn.wildfirechat.proto.WFCMessage;
 import io.moquette.spi.impl.Qos1PublishHandler;
 import io.netty.buffer.ByteBuf;
 import cn.wildfirechat.common.ErrorCode;
-import win.liyufan.im.IMTopic;
+import cn.wildfirechat.common.IMTopic;
 import win.liyufan.im.MessageShardingUtil;
 
 import static cn.wildfirechat.common.ErrorCode.ERROR_CODE_SUCCESS;

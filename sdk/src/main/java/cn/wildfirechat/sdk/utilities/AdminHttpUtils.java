@@ -46,7 +46,6 @@ public class AdminHttpUtils {
             String str = nonce + "|" + adminSecret + "|" + timestamp;
             String sign = DigestUtils.sha1Hex(str);
 
-
             post = new HttpPost(url);
             post.setHeader("Content-type", "application/json; charset=utf-8");
             post.setHeader("Connection", "Keep-Alive");
