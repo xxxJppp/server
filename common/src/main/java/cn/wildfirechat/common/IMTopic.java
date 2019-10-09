@@ -37,6 +37,9 @@ public interface IMTopic {
     String GetUserInfoTopic = "UPUI";
     String ModifyMyInfoTopic = "MMI";
 
+    /**
+     * 获取上传文件token
+     */
 	String GetQiniuUploadTokenTopic = "GQNUT";
 
 	//添加好友请求

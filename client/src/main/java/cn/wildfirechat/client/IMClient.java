@@ -77,9 +77,10 @@ public class IMClient implements Listener {
         /**
          * 接收消息
          * @param messageList
+         * @param messageHead
          * @param hasMore
          */
-        void onReceiveMessages(List<WFCMessage.Message> messageList, boolean hasMore);
+        void onReceiveMessages(List<WFCMessage.Message> messageList, long messageHead, boolean hasMore);
 
         /**
          * 撤回消息
@@ -212,6 +213,51 @@ public class IMClient implements Listener {
     }
 
     /**
+     * 从指定消息id开始拉取消息
+     * @param notifyMessage
+     * @param head 消息id
+     */
+    public void pullMessage(WFCMessage.NotifyMessage notifyMessage, long head) {
+        WFCMessage.PullMessageRequest request = WFCMessage.PullMessageRequest.newBuilder().setId(head).setType(notifyMessage.getType()).build();
+        byte[] data = request.toByteArray();
+        data = AES.AESEncrypt(data, privateSecret);
+        connection.publish(IMTopic.PullMessageTopic, data, QoS.AT_LEAST_ONCE, false, new Callback<byte[]>() {
+            @Override
+            public void onSuccess(byte[] value) {
+                byte[] data = verifDataBytes(value);
+                try {
+                    data = AES.AESDecrypt(data, privateSecret, true);
+                    try {
+                        WFCMessage.PullMessageResult result = WFCMessage.PullMessageResult.parseFrom(data);
+                        if (receiveMessageCallback != null && result.getMessageList().size() > 0) {
+                            List<WFCMessage.Message> messages = result.getMessageList();
+                            List<WFCMessage.Message> out = new ArrayList<>();
+                            for (WFCMessage.Message msg : messages) {
+                                if (msg.getConversation().getType() == ProtoConstants.ConversationType.ConversationType_Private && msg.getConversation().getTarget().equals(userId)) {
+                                    msg = msg.toBuilder().setConversation(msg.getConversation().toBuilder().setTarget(msg.getFromUser())).build();
+                                }
+                                out.add(msg);
+                            }
+                            receiveMessageCallback.onReceiveMessages(out, result.getHead(),false);
+                        }
+                        messageHead = result.getHead();
+                    } catch (InvalidProtocolBufferException e) {
+                        e.printStackTrace();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable value) {
+                log.error("Publish topic={} onFailure", IMTopic.PullMessageTopic);
+            }
+        });
+    }
+
+
+    /**
      * 发送消息
      * @param conversation
      * @param messageContent
@@ -238,35 +284,6 @@ public class IMClient implements Listener {
                 }
             }
 
-            @Override
-            public void onFailure(Throwable value) {
-                callback.onFailure(-1);
-            }
-        });
-    }
-
-
-    /**
-     * 发送消息
-     * @param topic
-     * @param data
-     * @param callback
-     */
-    public void sendMessage(String topic, byte[] data, final GeneralCallback callback) {
-        data = AES.AESEncrypt(data, privateSecret);
-        connection.publish(topic, data, QoS.AT_LEAST_ONCE, false, new Callback<byte[]>() {
-            @Override
-            public void onSuccess(byte[] value) {
-                if (value[0] == 0) {
-                    byte[] data = getDataBytes(value);
-
-                    data = AES.AESDecrypt(data, privateSecret, true);
-                    ByteBuffer buffer = ByteBuffer.wrap(data, 0,16);
-                    callback.onSuccess(buffer);
-                } else {
-                    callback.onFailure(value[0]);
-                }
-            }
             @Override
             public void onFailure(Throwable value) {
                 callback.onFailure(-1);
@@ -304,7 +321,6 @@ public class IMClient implements Listener {
             uidByte = Base64.getEncoder().encode(uidByte);
             String uid = new String(uidByte);
             httpPost.setHeader("uid", uid);
-
 
             HttpResponse response = httpClient.execute(httpPost);
             if(response != null){
@@ -370,41 +386,7 @@ public class IMClient implements Listener {
         if (topic.toString().equals(IMTopic.NotifyMessageTopic)) {
             try {
                 WFCMessage.NotifyMessage notifyMessage = WFCMessage.NotifyMessage.parseFrom(body.toByteArray());
-                WFCMessage.PullMessageRequest request = WFCMessage.PullMessageRequest.newBuilder().setId(messageHead).setType(notifyMessage.getType()).build();
-                byte[] data = request.toByteArray();
-                data = AES.AESEncrypt(data, privateSecret);
-                connection.publish(IMTopic.PullMessageTopic, data, QoS.AT_LEAST_ONCE, false, new Callback<byte[]>(){
-                    @Override
-                    public void onSuccess(byte[] value) {
-                        byte[] data = verifDataBytes(value);
-                        try {
-                            data = AES.AESDecrypt(data, privateSecret, true);
-                            try {
-                                WFCMessage.PullMessageResult result = WFCMessage.PullMessageResult.parseFrom(data);
-                                if (receiveMessageCallback != null && result.getMessageList().size() > 0) {
-                                    List<WFCMessage.Message> messages = result.getMessageList();
-                                    List<WFCMessage.Message> out = new ArrayList<>();
-                                    for (WFCMessage.Message msg : messages) {
-                                        if (msg.getConversation().getType() == ProtoConstants.ConversationType.ConversationType_Private && msg.getConversation().getTarget().equals(userId)) {
-                                            msg = msg.toBuilder().setConversation(msg.getConversation().toBuilder().setTarget(msg.getFromUser())).build();
-                                        }
-                                        out.add(msg);
-                                    }
-                                    receiveMessageCallback.onReceiveMessages(out, false);
-                                }
-                                messageHead = result.getHead();
-                            } catch (InvalidProtocolBufferException e) {
-                                e.printStackTrace();
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    @Override
-                    public void onFailure(Throwable value) {
-                        log.error("Publish topic={} onFailure",IMTopic.PullMessageTopic);
-                    }
-                });
+                pullMessage(notifyMessage, messageHead);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -549,8 +531,18 @@ public class IMClient implements Listener {
         //接收消息回调
         client.setReceiveMessageCallback(new ReceiveMessageCallback() {
             @Override
-            public void onReceiveMessages(List<WFCMessage.Message> messageList, boolean hasMore) {
-                System.out.println("recieved messages");
+            public void onReceiveMessages(List<WFCMessage.Message> messageList,long messageHead ,boolean hasMore) {
+                for (WFCMessage.Message message : messageList) {
+                    if(message.getConversation().getType() == ProtoConstants.ConversationType.ConversationType_Private){
+                        WFCMessage.MessageContent content = message.getContent();
+                        String searchableContent = content.getSearchableContent();
+                        System.out.println("私聊消息---------"+searchableContent);
+                    }else if(message.getConversation().getType() == ProtoConstants.ConversationType.ConversationType_Group){
+                        WFCMessage.MessageContent content = message.getContent();
+                        String searchableContent = content.getSearchableContent();
+                        System.out.println("群聊消息---------"+searchableContent);
+                    }
+                }
             }
 
             @Override
@@ -582,19 +574,13 @@ public class IMClient implements Listener {
         //连接状态
         client.setConnectionStatusCallback((ConnectionStatus newStatus) -> {
             if (newStatus == ConnectionStatus_Connected) {
-                WFCMessage.Conversation conversation = WFCMessage.Conversation.newBuilder().setType(0).setTarget("eHe2e2VV").setLine(0).build();
-                WFCMessage.MessageContent messageContent = WFCMessage.MessageContent.newBuilder().setSearchableContent("helloworld").setType(1).build();
-                client.sendMessage(conversation, messageContent, new SendMessageCallback() {
-                    @Override
-                    public void onSuccess(long messageUid, long timestamp) {
-                        System.out.println("send success");
-                    }
-
-                    @Override
-                    public void onFailure(int errorCode) {
-                        System.out.println("send failure");
-                    }
-                });
+                try {
+                    //连接成功 拉取消息
+                    WFCMessage.NotifyMessage notifyMessage = WFCMessage.NotifyMessage.newBuilder().setType(ProtoConstants.PullType.Pull_Normal).setHead(0).build();
+                    client.pullMessage(notifyMessage, notifyMessage.getHead());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
 
