@@ -33,7 +33,7 @@ public class Message {
 
     private final UTF8Buffer topic;
     private final Buffer payload;
-    private Callback<Callback<byte[]>>  onComplete;
+    private Callback<Callback<byte[]>> onComplete;
     private final DispatchQueue queue;
     boolean blocking = false;
 

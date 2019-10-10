@@ -18,13 +18,15 @@
 
 package org.fusesource.mqtt.codec;
 
-import java.io.IOException;
-import java.net.ProtocolException;
-
-import org.fusesource.mqtt.client.QoS;
 import org.fusesource.hawtbuf.DataByteArrayInputStream;
 import org.fusesource.hawtbuf.DataByteArrayOutputStream;
 import org.fusesource.hawtbuf.UTF8Buffer;
+import org.fusesource.mqtt.client.QoS;
+
+import java.io.IOException;
+import java.net.ProtocolException;
+
+import static org.fusesource.mqtt.codec.MessageSupport.Message;
 
 /**
  * <p>
@@ -32,7 +34,7 @@ import org.fusesource.hawtbuf.UTF8Buffer;
  *
  * @author <a href="http://hiramchirino.com">Hiram Chirino</a>
  */
-public class CONNECT implements MessageSupport.Message {
+public class CONNECT implements Message {
 
     public static final byte TYPE = 1;
     

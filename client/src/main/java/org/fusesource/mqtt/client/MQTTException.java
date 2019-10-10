@@ -1,8 +1,8 @@
 package org.fusesource.mqtt.client;
 
-import java.io.IOException;
-
 import org.fusesource.mqtt.codec.CONNACK;
+
+import java.io.IOException;
 
 public class MQTTException extends IOException {
   public final CONNACK connack;

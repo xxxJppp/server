@@ -18,15 +18,18 @@
 
 package org.fusesource.mqtt.codec;
 
-import org.fusesource.mqtt.client.QoS;
 import org.fusesource.hawtbuf.DataByteArrayInputStream;
 import org.fusesource.hawtbuf.DataByteArrayOutputStream;
 import org.fusesource.hawtbuf.UTF8Buffer;
+import org.fusesource.mqtt.client.QoS;
 
 import java.io.IOException;
 import java.net.ProtocolException;
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import static org.fusesource.mqtt.codec.MessageSupport.Acked;
+import static org.fusesource.mqtt.codec.MessageSupport.Message;
 
 /**
  * <p>
@@ -34,7 +37,7 @@ import java.util.Arrays;
  *
  * @author <a href="http://hiramchirino.com">Hiram Chirino</a>
  */
-public class UNSUBSCRIBE extends MessageSupport.HeaderBase implements MessageSupport.Message, MessageSupport.Acked {
+public class UNSUBSCRIBE extends MessageSupport.HeaderBase implements Message, Acked {
 
     public static final byte TYPE = 10;
     public static final UTF8Buffer[] NO_TOPICS = new UTF8Buffer[0];

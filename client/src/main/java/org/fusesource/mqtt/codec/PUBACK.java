@@ -20,13 +20,15 @@ package org.fusesource.mqtt.codec;
 
 import java.net.ProtocolException;
 
+import static org.fusesource.mqtt.codec.MessageSupport.Message;
+
 /**
  * <p>
  * </p>
  *
  * @author <a href="http://hiramchirino.com">Hiram Chirino</a>
  */
-public class PUBACK extends MessageSupport.AckBase implements MessageSupport.Message {
+public class PUBACK extends MessageSupport.AckBase implements Message {
 
     public static final byte TYPE = 4;
 

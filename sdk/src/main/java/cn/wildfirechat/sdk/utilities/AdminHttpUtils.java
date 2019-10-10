@@ -80,7 +80,6 @@ public class AdminHttpUtils {
                 }
 
                 in.close();
-
                 String content = sb.toString();
                 LOG.info("http request response content: {}", content);
 

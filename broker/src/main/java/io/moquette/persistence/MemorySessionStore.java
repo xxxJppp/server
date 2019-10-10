@@ -277,7 +277,7 @@ public class MemorySessionStore implements ISessionsStore {
 
     @Override
     public Session createUserSession(String username, String clientID) {
-        LOG.debug("createUserSession for client <{}>, user <{}>", clientID, username);
+        LOG.info("createUserSession for client <{}>, user <{}>", clientID, username);
 
         ClientSession clientSession = new ClientSession(clientID, this);
         Session session = databaseStore.getSession(username, clientID, clientSession);

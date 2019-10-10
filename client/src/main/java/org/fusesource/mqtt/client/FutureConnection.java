@@ -199,7 +199,7 @@ public class FutureConnection {
         return publish(utf8(topic), new Buffer(payload), qos, retain);
     }
 
-    public Future<byte[]> publish(final UTF8Buffer topic, final Buffer payload,  final QoS qos, final boolean retain) {
+    public Future<byte[]> publish(final UTF8Buffer topic, final Buffer payload, final QoS qos, final boolean retain) {
         final Promise<byte[]> future = new Promise<byte[]>();
         next.getDispatchQueue().execute(new Task() {
             public void run() {

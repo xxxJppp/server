@@ -20,7 +20,7 @@ package org.fusesource.mqtt.client;
 
 import org.fusesource.hawtbuf.UTF8Buffer;
 import org.fusesource.hawtdispatch.DispatchQueue;
-import org.fusesource.hawtdispatch.transport.*;
+import org.fusesource.hawtdispatch.transport.TcpTransport;
 import org.fusesource.mqtt.codec.CONNECT;
 
 import javax.net.ssl.SSLContext;
@@ -31,7 +31,6 @@ import java.util.List;
 import java.util.concurrent.*;
 
 import static org.fusesource.hawtbuf.Buffer.utf8;
-import static org.fusesource.hawtdispatch.Dispatch.createQueue;
 
 
 /**

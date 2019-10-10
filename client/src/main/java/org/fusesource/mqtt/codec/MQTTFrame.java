@@ -18,8 +18,8 @@
 
 package org.fusesource.mqtt.codec;
 
-import org.fusesource.mqtt.client.QoS;
 import org.fusesource.hawtbuf.Buffer;
+import org.fusesource.mqtt.client.QoS;
 
 /**
 * <p>

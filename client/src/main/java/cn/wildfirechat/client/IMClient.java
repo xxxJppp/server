@@ -16,6 +16,7 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.fusesource.hawtbuf.Buffer;
 import org.fusesource.hawtbuf.UTF8Buffer;
 import org.fusesource.mqtt.client.*;
+import org.fusesource.mqtt.codec.MQTTFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -67,6 +68,7 @@ public class IMClient implements Listener {
     protected String privateSecret;
 
     private long messageHead;
+    private static long friendRequestHead;
 
     private transient MQTT mqtt = new MQTT();
     private transient CallbackConnection connection = null;
@@ -161,8 +163,22 @@ public class IMClient implements Listener {
                 mqtt.setUserName(userId);
                 byte[] password = AES.AESEncrypt(token, privateSecret);
                 mqtt.setPassword(new UTF8Buffer(password));
+                mqtt.setTracer(new Tracer(){
+                    @Override
+                    public void onReceive(MQTTFrame frame) {
+                        log.info("recv: "+frame);
+                    }
 
+                    @Override
+                    public void onSend(MQTTFrame frame) {
+                        log.info("send: "+frame);
+                    }
 
+                    @Override
+                    public void debug(String message, Object... args) {
+                        log.info(String.format("debug: "+message, args));
+                    }
+                });
                 connection = mqtt.callbackConnection();
                 connection.listener(this);
 
@@ -291,6 +307,43 @@ public class IMClient implements Listener {
         });
     }
 
+    /**
+     * 拉取好友请求
+     * @param friendRequestHead
+     */
+    public void pullAddFriendRequest(long friendRequestHead) {
+        try {
+            WFCMessage.Version request = WFCMessage.Version.newBuilder().setVersion(friendRequestHead).build();
+            byte[] data = request.toByteArray();
+            data = AES.AESEncrypt(data, privateSecret);
+            connection.publish(IMTopic.FriendRequestPullTopic, data, QoS.AT_LEAST_ONCE, false, new Callback<byte[]>(){
+                @Override
+                public void onSuccess(byte[] value) {
+                    byte[] data = verifDataBytes(value);
+                    try {
+                        data = AES.AESDecrypt(data, privateSecret, true);
+                        try {
+                            WFCMessage.GetFriendRequestResult result = WFCMessage.GetFriendRequestResult.parseFrom(data);
+                            if (friendRequestCallback != null && result.getEntryList().size() > 0) {
+                                List<WFCMessage.FriendRequest> friendRequests = result.getEntryList();
+                                friendRequestCallback.onSuccess(friendRequests);
+                            }
+                        } catch (InvalidProtocolBufferException e) {
+                            e.printStackTrace();
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                @Override
+                public void onFailure(Throwable value) {
+                    log.error("Publish topic={} onFailure",IMTopic.FriendRequestPullTopic);
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     protected boolean route(String userId, String token) {
         HttpPost httpPost;
         try{
@@ -391,37 +444,7 @@ public class IMClient implements Listener {
                 e.printStackTrace();
             }
         }else if(topic.toString().equals(IMTopic.NotifyFriendRequestTopic)){
-            try {
-                WFCMessage.Version request = WFCMessage.Version.newBuilder().setVersion(0).build();
-                byte[] data = request.toByteArray();
-                data = AES.AESEncrypt(data, privateSecret);
-                connection.publish(IMTopic.FriendRequestPullTopic, data, QoS.AT_LEAST_ONCE, false, new Callback<byte[]>(){
-                    @Override
-                    public void onSuccess(byte[] value) {
-                        byte[] data = verifDataBytes(value);
-                        try {
-                            data = AES.AESDecrypt(data, privateSecret, true);
-                            try {
-                                WFCMessage.GetFriendRequestResult result = WFCMessage.GetFriendRequestResult.parseFrom(data);
-                                if (friendRequestCallback != null && result.getEntryList().size() > 0) {
-                                    List<WFCMessage.FriendRequest> friendRequests = result.getEntryList();
-                                    friendRequestCallback.onSuccess(friendRequests);
-                                }
-                            } catch (InvalidProtocolBufferException e) {
-                                e.printStackTrace();
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    @Override
-                    public void onFailure(Throwable value) {
-                        log.error("Publish topic={} onFailure",IMTopic.FriendRequestPullTopic);
-                    }
-                });
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            pullAddFriendRequest(friendRequestHead);
         }else if(topic.toString().equals(IMTopic.NotifyFriendTopic)){
             try {
                 WFCMessage.Version request = WFCMessage.Version.newBuilder().setVersion(0).build();
@@ -526,7 +549,7 @@ public class IMClient implements Listener {
     public static void main(String[] args) {
         //token与userid和clientid是绑定的，使用时一定要传入正确的userid和clientid，不然会认为token非法
         //clientId唯一代表一个设备，只能有一个登录。如果使用同一个clientId登录多次，会出现不可预料问题。
-        IMClient client = new IMClient("zbzUzU88", "tIJQSMMV3H2qeIjxIwkTfUVm75arqlOkgPI6jWHvh1ehANhV6UpMI1I9tjBWMs13UFx/AzdDi61Ab0RTn4+c6fxREy3GtbHscWoQE/2phHnOTHc7vUjo8NJsqxqWlQTkDguKLxubNmlJ3vQQA9/SYfMsSCXAwH+CvqiXMPGVCsI=",
+        IMClient client = new IMClient("zbzUzU88", "5m2fRxzwEVljVIUMSEcCqOAWdIRsWeSv8DgIJU9bU4MEsipo7UfD9SDyXhTuLvFaGeOIA6/jpxuVZHy5TNTZvveZtuc0ejkwiW/mvOGxbEDHXOwP3zRZsWayVFQzn9Nddomie0TMuMjVSk1DrKnJIRMGBqQa4QXGxAsfbiRs1nw=",
             "488ad2acc1d653801566034184818", "192.168.10.57", 80);
         //接收消息回调
         client.setReceiveMessageCallback(new ReceiveMessageCallback() {
@@ -555,9 +578,16 @@ public class IMClient implements Listener {
             @Override
             public void onSuccess(List<WFCMessage.FriendRequest> friendRequests) {
                 System.out.println("FriendRequestCallback onSuccess");
+                long max = 0L;
                 for (WFCMessage.FriendRequest friendRequest : friendRequests) {
                     System.out.println(friendRequest.getReason()+"——>"+friendRequest.getToUid());
+                    long updateDt = friendRequest.getUpdateDt();
+                    if(max < updateDt){
+                        max = updateDt;
+                    }
                 }
+                friendRequestHead = max;
+                System.out.println(friendRequestHead);
             }
         });
 
@@ -578,6 +608,9 @@ public class IMClient implements Listener {
                     //连接成功 拉取消息
                     WFCMessage.NotifyMessage notifyMessage = WFCMessage.NotifyMessage.newBuilder().setType(ProtoConstants.PullType.Pull_Normal).setHead(0).build();
                     client.pullMessage(notifyMessage, notifyMessage.getHead());
+
+                    //拉取好友请求
+                    client.pullAddFriendRequest(friendRequestHead);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

@@ -20,13 +20,16 @@ package org.fusesource.mqtt.codec;
 
 import java.net.ProtocolException;
 
+import static org.fusesource.mqtt.codec.MessageSupport.EmptyBase;
+import static org.fusesource.mqtt.codec.MessageSupport.Message;
+
 /**
  * <p>
  * </p>
  *
  * @author <a href="http://hiramchirino.com">Hiram Chirino</a>
  */
-public class DISCONNECT extends MessageSupport.EmptyBase implements MessageSupport.Message {
+public class DISCONNECT extends EmptyBase implements Message {
 
     public static final byte TYPE = 14;
 

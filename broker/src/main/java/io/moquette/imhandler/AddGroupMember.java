@@ -15,6 +15,8 @@ import io.netty.buffer.ByteBuf;
 import cn.wildfirechat.common.ErrorCode;
 import cn.wildfirechat.common.IMTopic;
 
+import java.util.List;
+
 import static cn.wildfirechat.common.ErrorCode.ERROR_CODE_SUCCESS;
 
 /**
@@ -27,11 +29,12 @@ public class AddGroupMember extends GroupHandler<WFCMessage.AddGroupMemberReques
     public ErrorCode action(ByteBuf ackPayload, String clientID, String fromUser, boolean isAdmin, WFCMessage.AddGroupMemberRequest request, Qos1PublishHandler.IMCallback callback) {
         ErrorCode errorCode = m_messagesStore.addGroupMembers(fromUser, isAdmin, request.getGroupId(), request.getAddedMemberList());
         if (errorCode == ERROR_CODE_SUCCESS) {
+            List<String> memberIdList = getMemberIdList(request.getAddedMemberList());
             if (request.hasNotifyContent() && request.getNotifyContent().getType() > 0) {
-                sendGroupNotification(fromUser, request.getGroupId(), request.getToLineList(), request.getNotifyContent());
+                sendGroup(fromUser, request.getGroupId(), memberIdList, request.getNotifyContent());
             } else {
                 WFCMessage.MessageContent content = new GroupNotificationBinaryContent(request.getGroupId(), fromUser, null, getMemberIdList(request.getAddedMemberList())).getAddGroupNotifyContent();
-                sendGroupNotification(fromUser, request.getGroupId(), request.getToLineList(), content);
+                sendGroup(fromUser, request.getGroupId(), memberIdList, content);
             }
         }
         return errorCode;

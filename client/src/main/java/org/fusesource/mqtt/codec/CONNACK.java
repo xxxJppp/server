@@ -18,11 +18,13 @@
 
 package org.fusesource.mqtt.codec;
 
-import org.fusesource.hawtbuf.*;
+import org.fusesource.hawtbuf.DataByteArrayInputStream;
+import org.fusesource.hawtbuf.DataByteArrayOutputStream;
 
 import java.io.IOException;
 import java.net.ProtocolException;
-import static org.fusesource.mqtt.codec.MessageSupport.*;
+
+import static org.fusesource.mqtt.codec.MessageSupport.Message;
 
 /**
  * <p>

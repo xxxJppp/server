@@ -18,14 +18,14 @@
 
 package org.fusesource.mqtt.codec;
 
-import java.io.IOException;
-import java.net.ProtocolException;
-
-import org.fusesource.mqtt.client.QoS;
 import org.fusesource.hawtbuf.Buffer;
 import org.fusesource.hawtbuf.DataByteArrayInputStream;
 import org.fusesource.hawtbuf.DataByteArrayOutputStream;
 import org.fusesource.hawtbuf.UTF8Buffer;
+import org.fusesource.mqtt.client.QoS;
+
+import java.io.IOException;
+import java.net.ProtocolException;
 
 /**
  * <p>
@@ -62,6 +62,9 @@ public final class MessageSupport {
 
     static protected UTF8Buffer readUTF(DataByteArrayInputStream is) throws ProtocolException {
         int size = is.readUnsignedShort();
+        if (size < 0) {
+            throw new ProtocolException("Invalid message encoding");
+        }
         Buffer buffer = is.readBuffer(size);
         if (buffer == null || buffer.length != size) {
             throw new ProtocolException("Invalid message encoding");

@@ -24,7 +24,8 @@ import org.fusesource.hawtbuf.DataByteArrayOutputStream;
 import java.io.IOException;
 import java.net.ProtocolException;
 import java.util.Arrays;
-import static org.fusesource.mqtt.codec.MessageSupport.*;
+
+import static org.fusesource.mqtt.codec.MessageSupport.Message;
 
 /**
  * <p>

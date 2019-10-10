@@ -21,7 +21,7 @@ package org.fusesource.mqtt.codec;
 import java.net.ProtocolException;
 
 import static org.fusesource.mqtt.codec.MessageSupport.AckBase;
-import static org.fusesource.mqtt.codec.MessageSupport.*;
+import static org.fusesource.mqtt.codec.MessageSupport.Message;
 
 /**
  * <p>

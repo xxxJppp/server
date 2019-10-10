@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 abstract public class GroupHandler<T> extends IMHandler<T> {
+
     protected void sendGroupNotification(String fromUser, String targetId, List<Integer> lines, WFCMessage.MessageContent content) {
         if (lines != null) {
             lines = new ArrayList<>();
@@ -35,6 +36,21 @@ abstract public class GroupHandler<T> extends IMHandler<T> {
             saveAndPublish(fromUser, null, builder.build());
         }
     }
+
+    protected void sendGroup(String fromUser, String targetId, List<String> lines, WFCMessage.MessageContent content) {
+
+        for (String line : lines) {
+            long timestamp = System.currentTimeMillis();
+            content = content.toBuilder().setSearchableContent(line).build();
+            WFCMessage.Message.Builder builder = WFCMessage.Message.newBuilder().setContent(content).setServerTimestamp(timestamp);
+            builder.setConversation(builder.getConversationBuilder().setType(ProtoConstants.ConversationType.ConversationType_Group).setTarget(targetId).setLine(0));
+            builder.setFromUser(fromUser);
+            long messageId = MessageShardingUtil.generateId();
+            builder.setMessageId(messageId);
+            saveAndPublish(fromUser, null, builder.build());
+        }
+    }
+
 
     protected List<String> getMemberIdList(List<WFCMessage.GroupMember> groupMembers) {
         List<String> out = new ArrayList<>();

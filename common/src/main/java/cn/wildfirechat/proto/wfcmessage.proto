@@ -5,8 +5,8 @@ option java_package="cn.wildfirechat.proto";
 option java_outer_classname = "WFCMessage";
 
 message AddFriendRequest{
-    required string target_uid = 1;
-    required string reason = 2;
+    required string target_uid = 1; //目标用户uid
+    required string reason = 2; //请求验证消息
 }
 
 message Conversation{

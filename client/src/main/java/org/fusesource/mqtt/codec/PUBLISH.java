@@ -18,14 +18,17 @@
 
 package org.fusesource.mqtt.codec;
 
-import org.fusesource.mqtt.client.QoS;
 import org.fusesource.hawtbuf.Buffer;
 import org.fusesource.hawtbuf.DataByteArrayInputStream;
 import org.fusesource.hawtbuf.DataByteArrayOutputStream;
 import org.fusesource.hawtbuf.UTF8Buffer;
+import org.fusesource.mqtt.client.QoS;
 
 import java.io.IOException;
 import java.net.ProtocolException;
+
+import static org.fusesource.mqtt.codec.MessageSupport.Acked;
+import static org.fusesource.mqtt.codec.MessageSupport.Message;
 
 /**
  * <p>
@@ -33,7 +36,7 @@ import java.net.ProtocolException;
  *
  * @author <a href="http://hiramchirino.com">Hiram Chirino</a>
  */
-public class PUBLISH extends MessageSupport.HeaderBase implements MessageSupport.Message, MessageSupport.Acked {
+public class PUBLISH extends MessageSupport.HeaderBase implements Message, Acked {
 
     public static final byte TYPE = 3;
 

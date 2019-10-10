@@ -39,13 +39,6 @@ public class TioClientStarter {
 		clientTioConfig.setHeartbeatTimeout(Const.TIMEOUT);
 		tioClient = new TioClient(clientTioConfig);
 		clientChannelContext = tioClient.connect(serverNode);
-		//连上后，发条消息
-		send();
 	}
 
-	private static void send() throws Exception {
-		TioPacket packet = new TioPacket();
-		packet.setBody("1".getBytes(TioPacket.CHARSET));
-		Tio.send(clientChannelContext, packet);
-	}
 }
