@@ -25,6 +25,9 @@ public class HandleFriendRequestHandler extends IMHandler<WFCMessage.HandleFrien
             WFCMessage.Message.Builder builder = WFCMessage.Message.newBuilder();
             builder.setFromUser(request.getTargetUid());
             long[] heads = new long[2];
+            if (request.getStatus()==0){
+                isAdmin = false;
+            }
             ErrorCode errorCode = m_messagesStore.handleFriendRequest(fromUser, request, builder, heads, isAdmin);
             if (errorCode == ERROR_CODE_SUCCESS && request.getStatus()==0) {
                 long messageId = MessageShardingUtil.generateId();
