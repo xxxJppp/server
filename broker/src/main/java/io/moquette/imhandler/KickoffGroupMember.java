@@ -14,6 +14,9 @@ import cn.wildfirechat.pojos.GroupNotificationBinaryContent;
 import io.moquette.spi.impl.Qos1PublishHandler;
 import io.netty.buffer.ByteBuf;
 import cn.wildfirechat.common.ErrorCode;
+
+import java.util.List;
+
 import static cn.wildfirechat.common.IMTopic.KickoffGroupMemberTopic;
 
 @Handler(value = KickoffGroupMemberTopic)
@@ -48,11 +51,14 @@ public class KickoffGroupMember extends GroupHandler<WFCMessage.RemoveGroupMembe
                 errorCode = ErrorCode.ERROR_CODE_NOT_RIGHT;
             } else {
                 //send notify message first, then kickoff the member
+                List<String> memberIdList = request.getRemovedMemberList();
                 if (request.hasNotifyContent() && request.getNotifyContent().getType() > 0) {
-                    sendGroupNotification(fromUser, groupInfo.getTargetId(), request.getToLineList(), request.getNotifyContent());
+//                    sendGroupNotification(fromUser, groupInfo.getTargetId(), request.getToLineList(), request.getNotifyContent());
+                    sendGroup(fromUser, request.getGroupId(), memberIdList, request.getNotifyContent());
                 } else {
                     WFCMessage.MessageContent content = new GroupNotificationBinaryContent(request.getGroupId(), fromUser, null, request.getRemovedMemberList()).getKickokfMemberGroupNotifyContent();
-                    sendGroupNotification(fromUser, request.getGroupId(), request.getToLineList(), content);
+//                    sendGroupNotification(fromUser, request.getGroupId(), request.getToLineList(), content);
+                    sendGroup(fromUser, request.getGroupId(), memberIdList, request.getNotifyContent());
                 }
                 errorCode = m_messagesStore.kickoffGroupMembers(fromUser, isAdmin, request.getGroupId(), request.getRemovedMemberList());
             }

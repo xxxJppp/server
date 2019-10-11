@@ -54,6 +54,11 @@ public class IMClient implements Listener {
     private FriendRequestCallback friendRequestCallback;
 
     /**
+     * 通知好友请求拉取消息
+     */
+    private NotifyFriendRequestCallback notifyFriendRequestCallback;
+
+    /**
      * 成为好友刷新列表回调
      */
     private FriendCallback friendCallback;
@@ -68,7 +73,6 @@ public class IMClient implements Listener {
     protected String privateSecret;
 
     private long messageHead;
-    private static long friendRequestHead;
 
     private transient MQTT mqtt = new MQTT();
     private transient CallbackConnection connection = null;
@@ -111,6 +115,13 @@ public class IMClient implements Listener {
          * @param friendRequests
          */
         void onSuccess(List<WFCMessage.FriendRequest> friendRequests);
+    }
+
+    public interface NotifyFriendRequestCallback {
+        /**
+         * 收到通知拉取消息
+         */
+        void notifyPullHandler();
     }
 
     public interface FriendCallback {
@@ -323,10 +334,12 @@ public class IMClient implements Listener {
                     try {
                         data = AES.AESDecrypt(data, privateSecret, true);
                         try {
-                            WFCMessage.GetFriendRequestResult result = WFCMessage.GetFriendRequestResult.parseFrom(data);
-                            if (friendRequestCallback != null && result.getEntryList().size() > 0) {
-                                List<WFCMessage.FriendRequest> friendRequests = result.getEntryList();
-                                friendRequestCallback.onSuccess(friendRequests);
+                            if(data!=null && data.length!=0){
+                                WFCMessage.GetFriendRequestResult result = WFCMessage.GetFriendRequestResult.parseFrom(data);
+                                if (friendRequestCallback != null && result.getEntryList().size() > 0) {
+                                    List<WFCMessage.FriendRequest> friendRequests = result.getEntryList();
+                                    friendRequestCallback.onSuccess(friendRequests);
+                                }
                             }
                         } catch (InvalidProtocolBufferException e) {
                             e.printStackTrace();
@@ -444,7 +457,14 @@ public class IMClient implements Listener {
                 e.printStackTrace();
             }
         }else if(topic.toString().equals(IMTopic.NotifyFriendRequestTopic)){
-            pullAddFriendRequest(friendRequestHead);
+           /**
+             此处采用回调拉取最新的好友请求,方便内部传入消息id，准确拉取消息
+           */
+           if(notifyFriendRequestCallback != null){
+               notifyFriendRequestCallback.notifyPullHandler();
+           }else{
+               throw new RuntimeException("Initialize setting notifyFriendRequestCallback property value");
+           }
         }else if(topic.toString().equals(IMTopic.NotifyFriendTopic)){
             try {
                 WFCMessage.Version request = WFCMessage.Version.newBuilder().setVersion(0).build();
@@ -518,6 +538,10 @@ public class IMClient implements Listener {
         this.friendRequestCallback = friendRequestCallback;
     }
 
+    public void setNotifyFriendRequestCallback(NotifyFriendRequestCallback notifyFriendRequestCallback) {
+        this.notifyFriendRequestCallback = notifyFriendRequestCallback;
+    }
+
     public void setFriendCallback(FriendCallback friendCallback) {
         this.friendCallback = friendCallback;
     }
@@ -551,6 +575,7 @@ public class IMClient implements Listener {
         //clientId唯一代表一个设备，只能有一个登录。如果使用同一个clientId登录多次，会出现不可预料问题。
         IMClient client = new IMClient("zbzUzU88", "5m2fRxzwEVljVIUMSEcCqOAWdIRsWeSv8DgIJU9bU4MEsipo7UfD9SDyXhTuLvFaGeOIA6/jpxuVZHy5TNTZvveZtuc0ejkwiW/mvOGxbEDHXOwP3zRZsWayVFQzn9Nddomie0TMuMjVSk1DrKnJIRMGBqQa4QXGxAsfbiRs1nw=",
             "488ad2acc1d653801566034184818", "192.168.10.57", 80);
+        final long[] friendRequestHead = {};
         //接收消息回调
         client.setReceiveMessageCallback(new ReceiveMessageCallback() {
             @Override
@@ -573,6 +598,9 @@ public class IMClient implements Listener {
                 System.out.println("recalled messages");
             }
         });
+
+        client.setNotifyFriendRequestCallback(()->client.pullAddFriendRequest(friendRequestHead[0]));
+
         //好友请求回调
         client.setFriendRequestCallback(new FriendRequestCallback() {
             @Override
@@ -586,8 +614,8 @@ public class IMClient implements Listener {
                         max = updateDt;
                     }
                 }
-                friendRequestHead = max;
-                System.out.println(friendRequestHead);
+                friendRequestHead[0] = max;
+                System.out.println(friendRequestHead[0]);
             }
         });
 
@@ -610,7 +638,7 @@ public class IMClient implements Listener {
                     client.pullMessage(notifyMessage, notifyMessage.getHead());
 
                     //拉取好友请求
-                    client.pullAddFriendRequest(friendRequestHead);
+                    client.pullAddFriendRequest(friendRequestHead[0]);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
