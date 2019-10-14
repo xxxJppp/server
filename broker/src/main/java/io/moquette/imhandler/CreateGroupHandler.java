@@ -16,6 +16,8 @@ import io.netty.buffer.ByteBuf;
 import cn.wildfirechat.common.ErrorCode;
 import cn.wildfirechat.common.IMTopic;
 
+import java.util.List;
+
 /**
  * 创建群组
  */
@@ -32,11 +34,15 @@ public class CreateGroupHandler extends GroupHandler<WFCMessage.CreateGroupReque
         }
         WFCMessage.GroupInfo groupInfo = m_messagesStore.createGroup(fromUser, request.getGroup().getGroupInfo(), request.getGroup().getMembersList());
         if (groupInfo != null) {
+            WFCMessage.Group group = request.getGroup();
+            List<String> memberIdList = getMemberIdList(group.getMembersList());
             if(request.hasNotifyContent() && request.getNotifyContent().getType() > 0) {
-                sendGroupNotification(fromUser, groupInfo.getTargetId(), request.getToLineList(), request.getNotifyContent());
+                sendGroup(fromUser, groupInfo.getTargetId(), memberIdList, request.getNotifyContent());
+//                sendGroupNotification(fromUser, groupInfo.getTargetId(), request.getToLineList(), request.getNotifyContent());
             } else {
                 WFCMessage.MessageContent content = new GroupNotificationBinaryContent(groupInfo.getTargetId(), fromUser, groupInfo.getName(), "").getCreateGroupNotifyContent();
-                sendGroupNotification(fromUser, groupInfo.getTargetId(), request.getToLineList(), content);
+                sendGroup(fromUser, groupInfo.getTargetId(), memberIdList, content);
+//                sendGroupNotification(fromUser, groupInfo.getTargetId(), request.getToLineList(), content);
             }
         }
         byte[] data = groupInfo.getTargetId().getBytes();
